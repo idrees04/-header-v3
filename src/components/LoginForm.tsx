@@ -31,6 +31,7 @@ export function LoginForm() {
       setLoading(true);
       try {
         await login(username.trim(), selectedRole);
+        localStorage.setItem('lastUsername', username.trim());
         navigate({ to: '/dashboard' });
       } catch {
         setError('Login failed. Please try again.');
@@ -41,6 +42,12 @@ export function LoginForm() {
     [username, selectedRole, login, navigate]
   );
 
+  useEffect(() => {
+    const lastUsername = localStorage.getItem('lastUsername');
+    if (lastUsername) {
+      navigate({ to: '/dashboard' });
+    }
+  }, []);
   return (
     <div className="flex min-h-screen items-center justify-center bg-login-bg px-4">
       {/* Subtle floating orb */}

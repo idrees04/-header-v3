@@ -28,12 +28,12 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
   if (!isAuthenticated) return null;
 
   return (
-    <div className="flex min-h-screen bg-background">
+    <div className="flex min-h-screen bg-background overflow-x-hidden">
       <AppSidebar />
       <motion.div
         animate={{ marginLeft: collapsed ? 68 : 264 }}
         transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
-        className="flex flex-1 flex-col"
+       className="flex flex-1 flex-col min-w-0 overflow-x-auto"
       >
         <AppHeader />
         <motion.main

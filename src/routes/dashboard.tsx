@@ -51,75 +51,54 @@ const courseLevelColors: Record<string, { bg: string; color: string }> = {
 };
 
 const baseColumns: GridColDef[] = [
-  {
-    field: 'std_id',
-    headerName: 'Student Id',
-    width: 100,
-    renderCell: (params: GridRenderCellParams) => {
-      const fullId = params.value ?? '';
-      const shortId = String(fullId).split('-')[0];
-      return (
-        <Tooltip title={fullId} placement="top" arrow>
-          <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-            {shortId}
-          </span>
-        </Tooltip>
-      );
-    },
-  },
+  // {
+  //   field: 'std_id',
+  //   headerName: 'Student Id',
+  //   width: 100,
+  //   renderCell: (params: GridRenderCellParams) => {
+  //     const fullId = params.value ?? '';
+  //     const shortId = String(fullId).split('-')[0];
+  //     return (
+  //       <Tooltip title={fullId} placement="top" arrow>
+  //         <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+  //           {shortId}
+  //         </span>
+  //       </Tooltip>
+  //     );
+  //   },
+  // },
   {
     field: 'std_name',
     headerName: 'Student Name',
-    width: 150,
+    width: 180,
     renderCell: (params: GridRenderCellParams) => {
       const name = params.value ?? '-';
-      const firstLetter = name !== '-' ? String(name).charAt(0).toUpperCase() : '-';
-      const colors = [
-        { bg: '#E6F1FB', color: '#185FA5' },
-        { bg: '#E1F5EE', color: '#0F6E56' },
-        { bg: '#FAECE7', color: '#993C1D' },
-        { bg: '#EEEDFE', color: '#534AB7' },
-        { bg: '#FDE8F5', color: '#7A2260' },
-        { bg: '#FFF4CC', color: '#854F0B' },
-      ];
-      const colorIndex = firstLetter.charCodeAt(0) % colors.length;
-      const { bg, color } = colors[colorIndex];
       return (
         <Tooltip title={name} placement="top" arrow>
-          <span style={{ display: 'flex', alignItems: 'center', gap: '8px', overflow: 'hidden' }}>
-            <span
-              style={{
-                minWidth: '30px',
-                width: '30px',
-                height: '30px',
-                borderRadius: '50%',
-                backgroundColor: bg,
-                color: color,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '11px',
-                fontWeight: 700,
-                flexShrink: 0,
-              }}
-            >
-              {firstLetter}
-            </span>
-            <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-              {name}
-            </span>
+          <span
+            style={{
+              display: 'flex',
+              flexDirection:'row',
+              alignItems: 'start',
+              justifyContent: 'left',
+              textAlign: 'start',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+            }}
+          >
+            {name}
           </span>
         </Tooltip>
       );
     },
   },
-  { field: 'std_nationality', headerName: 'Student Nationality', width: 100 },
-  { field: 'std_crm_number', headerName: 'Student Crm Number', width: 100 },
-  { field: 'std_phone_mobile', headerName: 'Student Phone Number', width: 100 },
+  { field: 'std_nationality', headerName: 'Nationality', width: 100 },
+  { field: 'std_crm_number', headerName: 'Crm Number', width: 110 },
+  { field: 'std_phone_mobile', headerName: 'Phone Number', width: 124 },
   {
     field: 'std_gender',
-    headerName: 'Student Gender',
-    width: 100,
+    headerName: 'Gender',
+    width: 90,
     renderCell: (params: GridRenderCellParams) => {
       const value = params.value;
       if (!value) return '-';
@@ -128,39 +107,71 @@ const baseColumns: GridColDef[] = [
         <Tooltip title={value} placement="top" arrow>
           <span
             style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width:"80px",
+              height: '25px',
+              padding: '4px 10px',
+              borderRadius: '999px',
               backgroundColor: style.bg,
               color: style.color,
-              padding: '2px 2px',
-              width: '60px',
-              textAlign: "center",
               fontSize: '12px',
               fontWeight: 600,
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
               whiteSpace: 'nowrap',
-              display: 'inline-block',
             }}
+
+
           >
-            {value}
+            {value === 'female' ? "Female" : "Male"}
           </span>
         </Tooltip>
       );
     },
   },
-  { field: 'std_passport', headerName: 'Student Passport', width: 100 },
-  { field: 'std_dob', headerName: 'Student DOB', width: 100 },
-  { field: 'std_stage', headerName: 'Student Stage', width: 100 },
-  { field: 'std_counselor', headerName: 'Student Counselor', width: 100 },
-  { field: 'std_counselor_uname', headerName: 'Student Counselor Username', width: 100 },
-  { field: 'std_adm_officer', headerName: 'Student Admin Officer', width: 100 },
-  { field: 'std_adm_officer_uname', headerName: 'Student Admin Officer Name', width: 100 },
-  { field: 'std_office', headerName: 'Student Office', width: 100 },
-  { field: 'std_subagent', headerName: 'Student Subagent', width: 100 },
-  { field: 'std_date_entered', headerName: 'Student Data Entered', width: 100 },
-  { field: 'std_date_entered_year', headerName: 'Student Date Entered Year', width: 100 },
-  { field: 'std_date_entered_month', headerName: 'Student Date Entered Month', width: 100 },
-  { field: 'std_email', headerName: 'Student Email', width: 100 },
-  { field: 'opp_id', headerName: 'Opp Id', width: 100 },
+  { field: 'std_passport', headerName: 'Passport', width: 100 },
+  {
+    field: 'std_dob',
+    headerName: 'DOB',
+    width: 85,
+    renderCell: (params: GridRenderCellParams) => {
+      const value = params.value;
+      if (!value) return '-';
+      try {
+        const date = new Date(value);
+        const formatted = new Intl.DateTimeFormat('en-US', {
+          day: 'numeric',
+          month: 'short',
+          year: 'numeric',
+        }).format(date);
+        return (
+          <Tooltip title={formatted} placement="top" arrow>
+            <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              {formatted}
+            </span>
+          </Tooltip>
+        );
+      } catch (e) {
+        return '-';
+      }
+    },
+  },
+  { field: 'std_stage', headerName: 'Student Stage', width: 120 },
+  { field: 'std_counselor', headerName: 'Counselor', width: 90 },
+  { field: 'std_counselor_uname', headerName: 'Counselor Name', width: 135 },
+  { field: 'std_adm_officer', headerName: 'Admin Officer', width: 114 },
+  { field: 'std_adm_officer_uname', headerName: 'Admin Officer Name', width:160 },
+  { field: 'std_office', headerName: 'Office', width: 70 },
+  { field: 'std_subagent', headerName: 'Subagent', width: 90 },
+  { field: 'std_date_entered', headerName: 'Data Entered', width: 110 },
+  // { field: 'std_date_entered_year', headerName: 'Date Entered Year', width: 140 },
+  // { field: 'std_date_entered_month', headerName: 'Date Entered Month', width: 100 },
+  { field: 'std_email', headerName: 'Email', width: 100 },
+  // { field: 'opp_id', headerName: 'Opp Id', width: 100 },
   { field: 'opp_name', headerName: 'Opp Name', width: 100 },
-  { field: 'opp_institute_name', headerName: 'Opp Institute Name', width: 100 },
+  { field: 'opp_institute_name', headerName: 'Opp Institute Name', width: 160 },
   {
     field: 'opp_course_level',
     headerName: 'Opp Course Level',
@@ -173,14 +184,20 @@ const baseColumns: GridColDef[] = [
         <Tooltip title={value} placement="top" arrow>
           <span
             style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: '140px',
+              height: '25px',
+              padding: '2px 10px',
+              borderRadius: '999px',
               backgroundColor: style.bg,
               color: style.color,
-              padding: '2px 10px',
               fontSize: '12px',
-              width:'150px',
               fontWeight: 600,
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
               whiteSpace: 'nowrap',
-              display: 'inline-block',
             }}
           >
             {value}
@@ -189,32 +206,33 @@ const baseColumns: GridColDef[] = [
       );
     },
   },
-  { field: 'opp_counselor', headerName: 'Opp Counselor', width: 100 },
-  { field: 'opp_counselor_uname', headerName: 'Opp Counselor Username', width: 100 },
-  { field: 'opp_adm_officer', headerName: 'Opp Admin Officer', width: 100 },
-  { field: 'opp_adm_officer_uname', headerName: 'Opp Admin Officer Name', width: 100 },
+  { field: 'opp_counselor', headerName: 'Opp Counselor', width: 128 },
+  { field: 'opp_counselor_uname', headerName: 'Opp Counselor Name', width: 170 },
+  { field: 'opp_adm_officer', headerName: 'Opp Admin Officer', width: 150 },
+  { field: 'opp_adm_officer_uname', headerName: 'Opp Admin Officer Name', width: 190 },
   { field: 'opp_office', headerName: 'Opp Office', width: 100 },
-  { field: 'opp_subagent', headerName: 'Opp Subagent', width: 100 },
-  { field: 'opp_salaes_stage', headerName: 'Opp Sales Stage', width: 100 },
-  { field: 'opp_commence_date', headerName: 'Opp Commence Date', width: 100 },
-  { field: 'opp_commence_date_year', headerName: 'Opp Commence Date Year', width: 100 },
-  { field: 'opp_commence_date_month', headerName: 'Opp Commence Date Month', width: 100 },
-  { field: 'opp_last_stage_change_date', headerName: 'Opp Last Stage Change Date', width: 100 },
-  { field: 'opp_date_entered', headerName: 'Opp Date Entered', width: 100 },
-  { field: 'opp_date_entered_year', headerName: 'Opp Date Entered Year', width: 100 },
-  { field: 'opp_date_entered_month', headerName: 'Opp Date Entered Month', width: 100 },
-  { field: 'std_created_by', headerName: 'STD Created By', width: 100 },
-  { field: 'std_lead_source', headerName: 'STD Lead Source', width: 100 },
-  { field: 'std_date_entered_iso', headerName: 'STD Date Entered', width: 100 },
-  { field: 'opp_commence_date_iso', headerName: 'Opp Commence Date ISO', width: 100 },
-  { field: 'opp_last_stage_change_date_iso', headerName: 'Opp Last Stage Change Date Iso', width: 100 },
-  { field: 'opp_date_entered_iso', headerName: 'Opp Date Entered Iso', width: 100 },
+  { field: 'opp_subagent', headerName: 'Opp Subagent', width: 120 },
+  { field: 'opp_salaes_stage', headerName: 'Opp Sales Stage', width: 135 },
+  { field: 'opp_commence_date', headerName: 'Opp Commence Date', width: 170 },
+  // { field: 'opp_commence_date_year', headerName: 'Opp Commence Date Year', width: 200 },
+  // { field: 'opp_commence_date_month', headerName: 'Opp Commence Date Month', width: 190 },
+  { field: 'opp_last_stage_change_date', headerName: 'Opp Last Stage Change Date', width: 220 },
+  { field: 'opp_date_entered', headerName: 'Opp Date Entered', width: 155 },
+  // { field: 'opp_date_entered_year', headerName: 'Opp Date Entered Year', width: 100 },
+  // { field: 'opp_date_entered_month', headerName: 'Opp Date Entered Month', width: 100 },
+  // { field: 'std_created_by', headerName: 'STD Created By', width: 100 },
+  // { field: 'std_lead_source', headerName: 'STD Lead Source', width: 100 },
+  // { field: 'std_date_entered_iso', headerName: 'STD Date Entered', width: 100 },
+  // { field: 'opp_commence_date_iso', headerName: 'Opp Commence Date ISO', width: 100 },
+  // { field: 'opp_last_stage_change_date_iso', headerName: 'Opp Last Stage Change Date Iso', width: 100 },
+  // { field: 'opp_date_entered_iso', headerName: 'Opp Date Entered Iso', width: 100 },
 ].map((col) =>
   col.field === 'std_id' ||
     col.field === 'opp_salaes_stage' ||
     col.field === 'std_name' ||
     col.field === 'std_gender' ||
-    col.field === 'opp_course_level'  // ← add this
+    col.field === 'std_dob' ||
+    col.field === 'opp_course_level'
     ? col
     : {
       ...col,
@@ -222,7 +240,7 @@ const baseColumns: GridColDef[] = [
         const value = params.value ?? '-';
         return (
           <Tooltip title={value} placement="top" arrow>
-            <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+            <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} >
               {value === null || value === undefined || value === '' ? '-' : String(value)}
             </span>
           </Tooltip>
@@ -262,6 +280,11 @@ function DashboardPage() {
                 width: '100%',
                 height: '100%',
                 cursor: 'pointer',
+                borderRadius: '999px',
+                transition: 'background-color 0.2s ease',
+                '&:hover': {
+                  backgroundColor: '#F2F2F2',
+                },
               }}
             >
               {isExpanded ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
@@ -303,7 +326,7 @@ function DashboardPage() {
           sx={{
             border: 0,
             '& .MuiDataGrid-columnHeaders': {
-              backgroundColor: '#f5f5f5',
+              backgroundColor: '#f5f5f5',              
             },
           }}
         />
@@ -340,6 +363,7 @@ function DashboardPage() {
           }}
           onPaginationModelChange={(model) => setPageSize(model.pageSize)}
           disableRowSelectionOnClick
+          rowHeight={40}
           getDetailPanelContent={getDetailPanelContent}
           getDetailPanelHeight={() => 'auto'}
           sx={{
@@ -347,6 +371,7 @@ function DashboardPage() {
             width: '100%',
             border:'1px solid #141E28',
             borderRadius:'10px',
+
             '& .MuiDataGrid-columnHeaderTitle': {
               fontWeight: 700,
             },
@@ -354,8 +379,12 @@ function DashboardPage() {
               transition: 'transform 0.2s ease, box-shadow 0.2s ease, font-size 0.2s ease, font-weight 0.2s ease',
               cursor: 'default',
             },
+
             '& .MuiDataGrid-row:nth-of-type(odd)': {
               backgroundColor: '#F7F6FF',
+            },
+            '& .MuiDataGrid-row--firstVisible': {
+              backgroundColor: '#F7F6FF important',
             },
             '& .MuiDataGrid-row:nth-of-type(even)': {
               backgroundColor: '#ffffff',
@@ -398,10 +427,15 @@ function DashboardPage() {
               borderRadius: '8px',
               borderLeft: '3px solid #185FA5',
             },
+            
             '& .MuiDataGrid-row.row--expanded .MuiDataGrid-cell': {
               fontSize: '13px',
               fontWeight: 700,
               color: '#185FA5',
+            },
+            '& .MuiDataGrid-cell': {
+              padding: '0 8px',
+              fontSize: '13px',
             },
             '& .MuiDataGrid-row.row--expanded:hover': {
               backgroundColor: '#ffffff !important',
@@ -439,17 +473,20 @@ function DashboardPage() {
               borderRadius: '0',
               zIndex: 4,
             },
-            '& .MuiDataGrid-detailPanel .MuiDataGrid-row::before': {
-              content: '""',
-              position: 'absolute',
-              left: 0,
-              top: 0,
-              bottom: 0,
-              width: '4px',
-              backgroundColor: '#378ADD',
-              borderRadius: '0',
-              zIndex: 4,
+            '& .MuiDataGrid-detailPanel .MuiDataGrid-row': {
+              marginLeft: '50px',
             },
+            // '& .MuiDataGrid-detailPanel .MuiDataGrid-row::before': {
+            //   content: '""',
+            //   position: 'absolute',
+            //   left: 0,
+            //   top: 0,
+            //   bottom: 0,
+            //   width: '4px',
+            //   backgroundColor: '#378ADD',
+            //   borderRadius: '0',
+            //   zIndex: 4,
+            // },
           }}
           getRowClassName={(params) =>
             expandedRows.has(params.id) ? 'row--expanded' : ''

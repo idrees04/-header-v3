@@ -1,0 +1,272 @@
+@import "tailwindcss";
+
+/* ─── Design Tokens ─────────────────────────────────────── */
+:root {
+  /* Surfaces */
+  --crm-bg:         #F9F8F6;
+  --crm-bg2:        #F2F1EE;
+  --crm-bg3:        #ECEAE6;
+  --crm-surface:    #FFFFFF;
+  --crm-surface2:   #FAFAF9;
+
+  /* Borders */
+  --crm-border:     rgba(0,0,0,0.07);
+  --crm-border2:    rgba(0,0,0,0.11);
+  --crm-border3:    rgba(0,0,0,0.16);
+
+  /* Text */
+  --crm-t1:         #18181A;
+  --crm-t2:         #5C5B57;
+  --crm-t3:         #9B9992;
+  --crm-t4:         #C4C2BB;
+
+  /* Accents */
+  --crm-blue:       #2B7FD4;
+  --crm-blue-light: #EBF4FF;
+  --crm-green:      #179E6F;
+  --crm-green-light:#E8F8F2;
+  --crm-amber:      #D97706;
+  --crm-amber-light:#FEF3C7;
+  --crm-red:        #DC3545;
+  --crm-red-light:  #FEE2E2;
+  --crm-purple:     #6D4FC2;
+  --crm-purple-light:#F0EBFF;
+  --crm-gray:       #78776F;
+  --crm-gray-light: #F2F1EE;
+  --crm-pink:       #C2507A;
+  --crm-pink-light: #FDEEF4;
+
+  /* Grid specifics */
+  --crm-header-bg:  #F0EFEB;
+  --crm-row-std-bg: #F7F6F3;
+  --crm-row-opp-bg: #FFFFFF;
+  --crm-row-h-std:  32px;
+  --crm-row-h-opp:  28px;
+  --crm-cell-py:    2px;
+  --crm-cell-px:    8px;
+
+  /* Typography */
+  --font-display: 'Syne', system-ui, sans-serif;
+  --font-body:    'DM Sans', system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, monospace;
+
+  /* Shadows */
+  --shadow-row-hover: 0 2px 12px rgba(0,0,0,0.08), 0 1px 4px rgba(0,0,0,0.04);
+  --shadow-card:      0 1px 4px rgba(0,0,0,0.06);
+  --shadow-surface:   0 0 0 1px var(--crm-border);
+}
+
+/* ─── Base ──────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body, #root {
+  height: 100%;
+  font-family: var(--font-body);
+  font-size: 12px;
+  background: var(--crm-bg);
+  color: var(--crm-t1);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── MUI DataGrid Pro Overrides ────────────────────────── */
+
+/* Container */
+.MuiDataGrid-root {
+  border: none !important;
+  font-family: var(--font-body) !important;
+  font-size: 11.5px !important;
+  background: var(--crm-surface) !important;
+}
+
+/* Column headers */
+.MuiDataGrid-columnHeaders {
+  background: var(--crm-header-bg) !important;
+  border-bottom: 1px solid var(--crm-border3) !important;
+  min-height: 34px !important;
+  max-height: 34px !important;
+}
+
+.MuiDataGrid-columnHeader {
+  height: 34px !important;
+  padding: 0 8px !important;
+}
+
+.MuiDataGrid-columnHeaderTitle {
+  font-size: 9.5px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+  color: var(--crm-t3) !important;
+}
+
+.MuiDataGrid-columnHeader:focus,
+.MuiDataGrid-columnHeader:focus-within {
+  outline: none !important;
+}
+
+.MuiDataGrid-columnSeparator {
+  display: none !important;
+}
+
+.MuiDataGrid-sortIcon {
+  font-size: 14px !important;
+  color: var(--crm-blue) !important;
+}
+
+/* Rows */
+.MuiDataGrid-row {
+  border-bottom: 1px solid var(--crm-border) !important;
+  min-height: var(--crm-row-h-opp) !important;
+  max-height: none !important;
+  transition: none !important; /* Framer Motion handles hover */
+}
+
+.MuiDataGrid-row:last-child {
+  border-bottom: none !important;
+}
+
+/* Cells */
+.MuiDataGrid-cell {
+  border-bottom: none !important;
+  border-right: none !important;
+  padding: var(--crm-cell-py) var(--crm-cell-px) !important;
+  align-items: center !important;
+  display: flex !important;
+  font-size: 11.5px !important;
+  color: var(--crm-t1) !important;
+  overflow: hidden !important;
+}
+
+.MuiDataGrid-cell:focus,
+.MuiDataGrid-cell:focus-within {
+  outline: none !important;
+}
+
+/* Student group rows */
+.MuiDataGrid-row.std-group-row {
+  background: var(--crm-row-std-bg) !important;
+  border-bottom: 1px solid var(--crm-border2) !important;
+}
+
+/* Opp rows */
+.MuiDataGrid-row.opp-child-row {
+  background: var(--crm-row-opp-bg) !important;
+}
+
+.MuiDataGrid-row.opp-last-child {
+  border-bottom: 2px solid var(--crm-border2) !important;
+}
+
+/* Virtual scroller */
+.MuiDataGrid-virtualScroller {
+  overflow-x: auto !important;
+}
+
+.MuiDataGrid-virtualScrollerContent {
+  min-width: max-content !important;
+}
+
+/* Pinned columns */
+.MuiDataGrid-pinnedColumns,
+.MuiDataGrid-pinnedColumnHeaders {
+  background: inherit !important;
+  box-shadow: 2px 0 8px rgba(0,0,0,0.06) !important;
+}
+
+.MuiDataGrid-pinnedColumns--left {
+  border-right: 1px solid var(--crm-border2) !important;
+}
+
+/* Column group header */
+.MuiDataGrid-columnHeadersInner--scrollable {
+  overflow-x: hidden !important;
+}
+
+/* Footer */
+.MuiDataGrid-footerContainer {
+  border-top: 1px solid var(--crm-border2) !important;
+  min-height: 36px !important;
+  background: var(--crm-header-bg) !important;
+}
+
+.MuiTablePagination-root {
+  font-family: var(--font-body) !important;
+  font-size: 11px !important;
+  color: var(--crm-t2) !important;
+}
+
+/* Tree data expand icons */
+.MuiDataGrid-treeDataGroupingCell {
+  display: flex !important;
+  align-items: center !important;
+  gap: 2px !important;
+}
+
+/* Row group expand button */
+.MuiDataGrid-treeDataGroupingCellToggle {
+  width: 20px !important;
+  height: 20px !important;
+  margin-right: 2px !important;
+}
+
+/* Overlay */
+.MuiDataGrid-overlay {
+  background: rgba(249,248,246,0.8) !important;
+  backdrop-filter: blur(4px) !important;
+}
+
+/* No rows */
+.MuiDataGrid-noRowsOverlay {
+  font-family: var(--font-body) !important;
+}
+
+/* Scrollbar */
+.MuiDataGrid-virtualScroller::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+.MuiDataGrid-virtualScroller::-webkit-scrollbar-track {
+  background: var(--crm-bg2);
+}
+.MuiDataGrid-virtualScroller::-webkit-scrollbar-thumb {
+  background: var(--crm-border3);
+  border-radius: 3px;
+}
+.MuiDataGrid-virtualScroller::-webkit-scrollbar-thumb:hover {
+  background: var(--crm-t3);
+}
+
+/* Checkbox */
+.MuiCheckbox-root {
+  padding: 2px !important;
+  color: var(--crm-t4) !important;
+}
+.MuiCheckbox-root.Mui-checked {
+  color: var(--crm-blue) !important;
+}
+
+/* Toolbar */
+.MuiDataGrid-toolbarContainer {
+  padding: 0 !important;
+  border-bottom: 1px solid var(--crm-border2) !important;
+}
+
+/* Menu */
+.MuiDataGrid-menu .MuiPaper-root {
+  font-family: var(--font-body) !important;
+  font-size: 12px !important;
+  border-radius: 8px !important;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12) !important;
+  border: 1px solid var(--crm-border2) !important;
+}
+
+/* Density compact */
+.MuiDataGrid-root--densityCompact .MuiDataGrid-cell {
+  padding: 1px 8px !important;
+}
+
+/* Opp indent border */
+.opp-indent-border {
+  border-left: 2.5px solid rgba(43,127,212,0.3) !important;
+}

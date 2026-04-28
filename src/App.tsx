@@ -2,18 +2,10 @@ import { useEffect } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { LoginForm } from '@/components/LoginForm';
 import { AppLayout } from '@/components/AppLayout';
-import { DashboardContainer } from '@/features/dashboard/DashboardContainer';
-import { dashboardPayload } from '@/data/dashboardPayload';
 import { FileText } from 'lucide-react';
 import { useAuthStore } from '@/stores/authStore';
+import DashboardPage from './features/dashboard/DashboardContainer';
 
-function DashboardPage() {
-  return (
-    <AppLayout>
-      <DashboardContainer records={dashboardPayload.data} />
-    </AppLayout>
-  );
-}
 
 function CatchAllPage() {
   const location = useLocation();

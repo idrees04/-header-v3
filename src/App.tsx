@@ -4,7 +4,7 @@ import { LoginForm } from '@/components/LoginForm';
 import { AppLayout } from '@/components/AppLayout';
 import { FileText } from 'lucide-react';
 import { useAuthStore } from '@/stores/authStore';
-import DashboardPage from './features/dashboard/DashboardContainer';
+import DashboardPage from './pages/DashboardPage';
 
 
 function CatchAllPage() {

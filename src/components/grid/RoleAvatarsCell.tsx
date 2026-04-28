@@ -80,11 +80,11 @@ export const RoleAvatarsCell = React.memo(
             );
 
             // 🔥 Sub-agent now correctly ignored if "—" or empty/null
-            pushRole(
-                row.std_subagent,
-                `Sub-Agent: ${row.std_subagent}`,
-                'subagent'
-            );
+            // pushRole(
+            //     row.std_subagent,
+            //     `Sub-Agent: ${row.std_subagent}`,
+            //     'subagent'
+            // );
         } else {
             pushRole(
                 row.opp_adm_officer,
@@ -104,11 +104,11 @@ export const RoleAvatarsCell = React.memo(
                 'office'
             );
 
-            pushRole(
-                row.opp_subagent,
-                `Sub-Agent: ${row.opp_subagent}`,
-                'subagent'
-            );
+            // pushRole(
+            //     row.opp_subagent,
+            //     `Sub-Agent: ${row.opp_subagent}`,
+            //     'subagent'
+            // );
         }
 
         // ✅ Empty state

@@ -88,19 +88,19 @@ export const RoleAvatarsCell = React.memo(
         } else {
             pushRole(
                 row.opp_adm_officer,
-                `Student - Admission Officer: ${row.opp_adm_officer}`,
+                `Program-Admission Officer: ${row.opp_adm_officer}`,
                 'adm_officer'
             );
 
             pushRole(
                 row.opp_counselor,
-                `Student - Counsellor: ${row.opp_counselor}`,
+                `Program - Counsellor: ${row.opp_counselor}`,
                 'counselor'
             );
 
             pushRole(
                 row.opp_office,
-                `Student is under Office: ${row.opp_office}`,
+                `Program is under Office: ${row.opp_office}`,
                 'office'
             );
 

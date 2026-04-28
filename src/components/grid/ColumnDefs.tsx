@@ -3,7 +3,7 @@ import type { GridRow } from '../../lib/gridRows';
 import {
   NameCell, CrmCell, GenderCell, NatCell, StudentStageCell,
   OppStageCell, LevelCell, OppCountCell, TextCell, DateCell,
-  ProgramCell, InstituteCell,
+  ProgramCell, InstituteCell,EmailCell,PhoneCell
 } from './CellRenderers';
 import { RoleAvatarsCell } from './RoleAvatarsCell';
 
@@ -26,24 +26,24 @@ const studentColumns: CrmColDef[] = [
   {
     field: 'std_name',
     headerName: 'STUDENT / PROGRAM',
-    width: 180,
-    minWidth: 140,
+    width: 220,
+    minWidth: 180,
     sortable: true,
     pinnable: true,
     groupId: 'student',
     priority: 1,
     renderCell: (p: GridRenderCellParams<GridRow>) => <NameCell {...p} />,
   },
-  {
-    field: 'std_crm_number',
-    headerName: 'CRM #',
-    width: 132,
-    sortable: true,
-    pinnable: true,
-    groupId: 'student',
-    priority: 1,
-    renderCell: (p: GridRenderCellParams<GridRow>) => <CrmCell {...p} />,
-  },
+  // {
+  //   field: 'std_crm_number',
+  //   headerName: 'CRM #',
+  //   width: 132,
+  //   sortable: true,
+  //   pinnable: true,
+  //   groupId: 'student',
+  //   priority: 1,
+  //   renderCell: (p: GridRenderCellParams<GridRow>) => <CrmCell {...p} />,
+  // },
   {
     field: 'std_nationality',
     headerName: 'NAT.',
@@ -74,8 +74,26 @@ const studentColumns: CrmColDef[] = [
     renderCell: (p: GridRenderCellParams<GridRow>) => <DateCell {...p} field="std_dob" />,
   },
   {
+    field: 'std_phone_mobile',
+    headerName: 'Phone',
+    width: 92,
+    sortable: false,
+    groupId: 'student',
+    priority: 4,
+    renderCell: (p: GridRenderCellParams<GridRow>) => <PhoneCell {...p} field="std_phone_mobile" />,
+  },
+  {
+    field: 'std_email',
+    headerName: 'Email',
+    width: 92,
+    sortable: false,
+    groupId: 'student',
+    priority: 4,
+    renderCell: (p: GridRenderCellParams<GridRow>) => <EmailCell {...p} field="std_email" />,
+  },
+  {
     field: 'roles_avatars',
-    headerName: 'ROLES',
+    headerName: 'Std.Info',
     width: 160,
     sortable: false,
     groupId: 'student',

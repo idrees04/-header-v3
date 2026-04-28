@@ -1,5 +1,5 @@
 import { memo, useState, useCallback, useMemo } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, ChevronLeft, ChevronRight, Sparkles } from 'lucide-react';
 import { useMenu } from '@/hooks/useMenu';
@@ -222,7 +222,7 @@ export function AppSidebar() {
     .join('')
     .toUpperCase()
     .slice(0, 2);
-
+const navigate = useNavigate()
   return (
     <motion.aside
       animate={{ width: collapsed ? 68 : 264 }}
@@ -237,16 +237,18 @@ export function AppSidebar() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="flex items-center gap-2.5"
+            className="flex items-center gap-2.5 cusor-pointer"
+            onClick={() => navigate('/dashboard')}
           >
             <motion.div
               whileHover={{ rotate: 12, scale: 1.1 }}
               transition={{ type: 'spring', stiffness: 400, damping: 12 }}
-              className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary shadow-lg shadow-primary/25"
+              className="cursor-pointer flex h-9 w-9 items-center justify-center rounded-xl bg-primary shadow-lg shadow-primary/25"
+              onClick={()=> navigate('/dashboard')}
             >
               <Sparkles className="h-4.5 w-4.5 text-primary-foreground" />
             </motion.div>
-            <span className="text-lg font-bold tracking-tight text-sidebar-active-fg">
+            <span className="text-lg font-bold tracking-tight text-sidebar-active-fg cursor-pointer">
               IGEC Portal
             </span>
           </motion.div>
@@ -275,7 +277,7 @@ export function AppSidebar() {
 
       {/* Expand button when collapsed */}
       {collapsed && (
-        <div className="flex justify-center py-2">
+        <div className="flex justify-center py-2 cursor-pointer">
           <motion.button
             whileHover={{ scale: 1.15 }}
             whileTap={{ scale: 0.9 }}

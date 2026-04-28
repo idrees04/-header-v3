@@ -148,6 +148,36 @@ html, body, #root {
   background: var(--crm-row-std-bg) !important;
   border-bottom: 1px solid var(--crm-border2) !important;
 }
+/* ========================= */
+/* ACTIVE STUDENT ROW FIX   */
+/* ========================= */
+
+/* Main row */
+.MuiDataGrid-row.std-group-row-active {
+  background-color: #FEE2E2 !important;
+}
+
+/* Main cells */
+.MuiDataGrid-row.std-group-row-active .MuiDataGrid-cell {
+  background-color: #FEE2E2 !important;
+}
+
+/* 🔥 THIS is the KEY: pinned columns live separately */
+.MuiDataGrid-pinnedColumns .MuiDataGrid-row.std-group-row-active {
+  background-color: #FEE2E2 !important;
+}
+
+/* pinned cells */
+.MuiDataGrid-pinnedColumns .MuiDataGrid-row.std-group-row-active .MuiDataGrid-cell {
+  background-color: #FEE2E2 !important;
+}
+
+/* Hover */
+.MuiDataGrid-row.std-group-row-active:hover,
+.MuiDataGrid-row.std-group-row-active:hover .MuiDataGrid-cell,
+.MuiDataGrid-pinnedColumns .MuiDataGrid-row.std-group-row-active:hover {
+  background-color: #FECACA !important;
+}
 
 /* Opp rows */
 .MuiDataGrid-row.opp-child-row {
@@ -183,6 +213,18 @@ html, body, #root {
   overflow-x: hidden !important;
 }
 
+.MuiDataGrid-row.opp-child-row-even {
+  background-color: #FFFFFF !important;
+}
+
+.MuiDataGrid-row.opp-child-row-odd {
+  background-color: #F7F6F3 !important;
+}
+
+.MuiDataGrid-row.opp-child-row-even:hover,
+.MuiDataGrid-row.opp-child-row-odd:hover {
+  background-color: #EEF2F7 !important;
+}
 /* Footer */
 .MuiDataGrid-footerContainer {
   border-top: 1px solid var(--crm-border2) !important;

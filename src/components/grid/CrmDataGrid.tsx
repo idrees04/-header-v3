@@ -9,7 +9,7 @@ import {
   type GridRowClassNameParams,
   type GridColumnGroupingModel,
 } from '@mui/x-data-grid-pro';
-import { useDashboardStore, PAGE_SIZE_OPTIONS } from '../../store/dashboardStore';
+import { PAGE_SIZE_OPTIONS, useDashboardStore } from '@/store/dashboardStore';
 import { buildGridRows, type GridRow } from '../../lib/gridRows';
 import { ALL_COLUMNS, COLUMN_GROUPS } from './ColumnDefs';
 import { GridToolbarComposite } from './GridToolbarComposite';
@@ -209,7 +209,7 @@ export const CrmDataGrid: React.FC = () => {
         rows={visibleRows}
         columns={ALL_COLUMNS}
         columnGroupingModel={columnGroupingModel}
-
+        showToolbar
         // Row identity
         getRowId={(row) => row.id}
         getRowHeight={getRowHeight as any}

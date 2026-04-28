@@ -1,5 +1,5 @@
 import { memo, useState, useCallback, useMemo } from 'react';
-import { Link, useLocation } from '@tanstack/react-router';
+import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, ChevronLeft, ChevronRight, Sparkles } from 'lucide-react';
 import { useMenu } from '@/hooks/useMenu';

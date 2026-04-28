@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
-import { useNavigate } from '@tanstack/react-router';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { LogIn, Sparkles } from 'lucide-react';
 import { useAuthStore } from '@/stores/authStore';
@@ -11,6 +11,7 @@ export function LoginForm() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const login = useAuthStore((s) => s.login);
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
   const navigate = useNavigate();
   const roles = getAllRoleNames();
 
@@ -32,7 +33,7 @@ export function LoginForm() {
       try {
         await login(username.trim(), selectedRole);
         localStorage.setItem('lastUsername', username.trim());
-        navigate({ to: '/dashboard' });
+        navigate('/dashboard', { replace: true });
       } catch {
         setError('Login failed. Please try again.');
       } finally {
@@ -45,9 +46,15 @@ export function LoginForm() {
   useEffect(() => {
     const lastUsername = localStorage.getItem('lastUsername');
     if (lastUsername) {
-      navigate({ to: '/dashboard' });
+      setUsername(lastUsername);
     }
   }, []);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/dashboard', { replace: true });
+    }
+  }, [isAuthenticated, navigate]);
   return (
     <div className="flex min-h-screen items-center justify-center bg-login-bg px-4">
       {/* Subtle floating orb */}

@@ -39,6 +39,7 @@ export interface ApiLoginResponse {
 
 export interface AuthState {
   isAuthenticated: boolean;
+  isHydrated: boolean;
   fullname: string;
   roles: string[];
   branchId: string;

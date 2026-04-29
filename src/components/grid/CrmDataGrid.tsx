@@ -127,12 +127,12 @@ export const CrmDataGrid: React.FC = () => {
       useFlex: true,
       flexBase: 1,
       fixedColumnWidths: {
-        std_name: 256,
-        std_gender: 45,
+        std_name: 285,
+        std_gender: 50,
         std_nationality: 85,
-        std_date_entered: 100,
         roles_avatars: 150,
-        std_stage: 150,
+        std_date_entered: 90,
+        std_stage: 130,
         opp_count: 75,
       },
     });
@@ -324,8 +324,9 @@ export const CrmDataGrid: React.FC = () => {
         onColumnVisibilityModelChange={handleColumnVisibilityChange}
 
         // Pinned columns (student name + CRM)
-        pinnedColumns={{ left: ['std_name', 'std_crm_number'] }}
-
+        // pinnedColumns={{ left: ['std_name', 'std_crm_number'] }}
+        pinnedColumns={{ left: [], right: [] }}
+        disableColumnPinning
         // Density
         density="compact"
 

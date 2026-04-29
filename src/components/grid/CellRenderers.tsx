@@ -53,7 +53,7 @@ export const NameCell = React.memo((params: GridRenderCellParams<GridRow>) => {
         },
       }}
     >
-      <span className="block overflow-hidden text-ellipsis whitespace-nowrap max-w-full font-medium text-[11px] text-[#18181A]">
+      <span className="block overflow-hidden text-ellipsis whitespace-nowrap max-w-full font-medium text-[11px] text-[#008000]">
         {displayName || '—'}
       </span>
     </Tooltip>
@@ -165,7 +165,7 @@ export const StudentSubAgent = React.memo((params: GridRenderCellParams<GridRow>
   if (!row.std_subagent) return <span className="text-[#D0CEC7] text-[10px]">—</span>;
   const cfg = getStudentStageConfig(row.std_subagent);
   return (
-     <TooltipCell
+    <TooltipCell
       value={cfg.label}
       className="font-mono text-[10.5px] text-[#18181A]"
     />

@@ -121,6 +121,18 @@ export const EmailCell = React.memo((params: GridRenderCellParams<GridRow>) => {
 });
 EmailCell.displayName = 'EmailCell';
 
+
+// ── PASSPORT cell ─────────────────────────────────────────────
+export const PassportCell = React.memo((params: GridRenderCellParams<GridRow>) => {
+  const row = params.row as GridRow;
+  return (
+    <TooltipCell
+      value={row.std_passport}
+      className="text-[10.5px] text-[#18181A]"
+    />
+  );
+});
+PassportCell.displayName = 'PassportCell';
 // ── Nationality cell ───────────────────────────────────────
 export const NatCell = React.memo((params: GridRenderCellParams<GridRow>) => {
   const row = params.row as GridRow;

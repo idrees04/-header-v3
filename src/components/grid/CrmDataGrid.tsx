@@ -14,6 +14,7 @@ import {
 import { PAGE_SIZE_OPTIONS, useDashboardStore } from '@/store/dashboardStore';
 import { buildGridRows, type GridRow } from '../../lib/gridRows';
 import { ALL_COLUMNS } from './ColumnDefs';
+import { calculateColumnWidths } from '../../lib/columnWidthUtils';
 import { GridToolbarComposite } from './GridToolbarComposite';
 import { GridNoRows } from './GridNoRows';
 import { GridFooterComposite } from './GridFooterComposite';
@@ -114,6 +115,28 @@ export const CrmDataGrid: React.FC = () => {
     [paginatedStudents]
   );
 
+  // ── Compute column widths based on data ──────────────────
+  const columns = useMemo(() => {
+    return calculateColumnWidths(ALL_COLUMNS, rows, {
+      charWidth: 8,
+      padding: 16,
+      minWidth: 40,
+      maxWidth: 400,
+      includeHeader: true,
+      factor: 1.2,
+      useFlex: true,
+      flexBase: 1,
+      fixedColumnWidths: {
+        std_name: 256,
+        std_gender: 45,
+        std_nationality: 85,
+        std_date_entered: 100,
+        roles_avatars: 150,
+        std_stage: 150,
+        opp_count: 75,
+      },
+    });
+  }, [rows]);
   // ── Map store Set<string> → Set<GridRowId> for MUI prop ──
   // The store keeps `std::${id}` keys; this version of MUI expects Set<GridRowId>.
   const detailPanelExpandedRowIds = useMemo<Set<GridRowId>>(
@@ -250,7 +273,7 @@ export const CrmDataGrid: React.FC = () => {
       <DataGridPro<GridRow>
         apiRef={apiRef}
         rows={rows}
-        columns={ALL_COLUMNS}
+        columns={columns}
         showToolbar
 
         // Row identity
@@ -259,7 +282,7 @@ export const CrmDataGrid: React.FC = () => {
         getRowClassName={getRowClassName}
 
         // Autosize & Initial State
-        autosizeOnMount
+        // autosizeOnMount
         autosizeOptions={{
           expand: true,
           includeOutliers: true,
@@ -272,7 +295,7 @@ export const CrmDataGrid: React.FC = () => {
           treeData: {
             defaultGroupingExpansionDepth: 0,
           },
-        } as GridInitialState & { rowGrouping?: any; treeData?: any }}
+        } as GridInitialState & { rowGrouping?: unknown; treeData?: unknown }}
 
         // ── Detail panel ──────────────────────────────────
         getDetailPanelContent={getDetailPanelContent}

@@ -262,7 +262,7 @@ const OPP_COLUMNS: Array<{ label: string; align?: 'center' | 'left'; minWidth?: 
   { label: 'Last Change', align: 'left', minWidth: 88 },
   { label: 'Entered', align: 'left', minWidth: 88 },
   { label: 'Team', align: 'center', minWidth: 90 },
-  // { label: 'Sub-Agent', align: 'left', minWidth: 100 },
+  { label: 'Sub-Agent', align: 'left', minWidth: 100 },
 
 ];
 

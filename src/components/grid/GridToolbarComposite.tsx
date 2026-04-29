@@ -8,7 +8,7 @@ import { motion } from 'framer-motion';
 import { useDashboardStore } from '../../store/dashboardStore';
 import type { FilterMode } from '../../types';
 import { Input } from '../ui/input';
-import { Button } from '../ui/Button';
+import { Button } from '../ui/button';
 
 const FILTERS: { mode: FilterMode; label: string }[] = [
   { mode: 'all', label: 'All' },
@@ -65,8 +65,9 @@ export const GridToolbarComposite: React.FC = () => {
     inputRef.current?.focus();
   }, [setSearchQuery]);
 
-  // 🔥 derive state (core logic)
-  const isAllExpanded = paginatedStudents.length > 0 &&
+  // derive state
+  const isAllExpanded =
+    paginatedStudents.length > 0 &&
     paginatedStudents.every(s => expandedRowIds.has(`std::${s.std_id}`));
 
   const totalOpps = paginatedStudents.reduce(
@@ -80,7 +81,7 @@ export const GridToolbarComposite: React.FC = () => {
       <div className="flex items-center gap-2 px-3 py-2 flex-wrap">
 
         {/* Search */}
-        <div className="w-72 flex-shrink-0">
+        <div className="w-72 flex-shrink-0 text-black">
           <Input
             ref={inputRef}
             type="text"
@@ -105,7 +106,7 @@ export const GridToolbarComposite: React.FC = () => {
                   fontFamily: 'var(--font-body)',
                   fontSize: '10.5px',
                   textTransform: 'none',
-                  color: '#5C5B57',
+                  color: '#000000',
                   padding: '3px 8px',
                   borderRadius: '5px',
                   '&:hover': { background: '#F2F1EE' },
@@ -122,7 +123,7 @@ export const GridToolbarComposite: React.FC = () => {
                   fontFamily: 'var(--font-body)',
                   fontSize: '10.5px',
                   textTransform: 'none',
-                  color: '#5C5B57',
+                  color: '#000000',
                   padding: '3px 8px',
                   borderRadius: '5px',
                   '&:hover': { background: '#F2F1EE' },
@@ -135,10 +136,10 @@ export const GridToolbarComposite: React.FC = () => {
         {/* Divider */}
         <div className="h-5 w-px bg-[rgba(0,0,0,0.09)]" />
 
-        {/* ✅ Smart Toggle Button */}
+        {/* Expand / Collapse */}
         <motion.div whileTap={{ scale: 0.94 }}>
           <Button
-            className="rounded-full flex items-center gap-1.5"
+            className="rounded-full flex items-center gap-1.5 text-black"
             variant="ghost"
             size="sm"
             onClick={toggleExpandAll}
@@ -150,13 +151,13 @@ export const GridToolbarComposite: React.FC = () => {
         </motion.div>
 
         {/* Stats */}
-        <div className="ml-auto text-[10px] text-[#9B9992] font-mono tabular-nums whitespace-nowrap">
-          <span className="font-semibold text-[#5C5B57]">
+        <div className="ml-auto text-[10px] text-black font-mono tabular-nums whitespace-nowrap">
+          <span className="font-semibold text-black">
             {totalRows.toLocaleString()}
           </span>{' '}
           students
           &nbsp;·&nbsp;
-          <span className="font-semibold text-[#5C5B57]">
+          <span className="font-semibold text-black">
             {totalOpps.toLocaleString()}
           </span>{' '}
           opps
@@ -165,7 +166,7 @@ export const GridToolbarComposite: React.FC = () => {
 
       {/* Row 2 */}
       <div className="flex items-center gap-1 px-3 pb-2 flex-wrap">
-        <span className="text-[9px] font-bold uppercase tracking-[0.6px] text-[#C4C2BB] mr-1">
+        <span className="text-[9px] font-bold uppercase tracking-[0.6px] text-black mr-1">
           Filter:
         </span>
 
@@ -177,7 +178,7 @@ export const GridToolbarComposite: React.FC = () => {
               'inline-flex items-center rounded-full px-2.5 py-0.5 text-[10px] font-medium border transition-all duration-150 cursor-pointer',
               filterMode === f.mode
                 ? 'bg-[#18181A] text-white border-[#18181A]'
-                : 'bg-white text-[#5C5B57] border-[rgba(0,0,0,0.10)] hover:border-[rgba(0,0,0,0.18)] hover:bg-[#F2F1EE]',
+                : 'bg-white text-black border-[rgba(0,0,0,0.10)] hover:border-[rgba(0,0,0,0.18)] hover:bg-[#F2F1EE]',
             ].join(' ')}
             whileTap={{ scale: 0.95 }}
             transition={{ duration: 0.1 }}

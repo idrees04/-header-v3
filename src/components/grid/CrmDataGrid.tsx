@@ -8,6 +8,8 @@ import {
   type GridPaginationModel,
   type GridRowClassNameParams,
   type GridRowId,
+  type GridRowHeightParams,
+  type GridInitialState,
 } from '@mui/x-data-grid-pro';
 import { PAGE_SIZE_OPTIONS, useDashboardStore } from '@/store/dashboardStore';
 import { buildGridRows, type GridRow } from '../../lib/gridRows';
@@ -30,14 +32,14 @@ const ROW_SX = {
 
   // Student row — expanded / active (cyan highlight)
   '&.std-group-row-active, &.std-group-row-active .MuiDataGrid-cell, &.std-group-row-active .MuiDataGrid-cell--pinnedLeft':
-    {
-      backgroundColor: '#CFFAFE !important',
-    },
+  {
+    backgroundColor: '#CFFAFE !important',
+  },
 
   '&.std-group-row-active:hover, &.std-group-row-active:hover .MuiDataGrid-cell, &.std-group-row-active:hover .MuiDataGrid-cell--pinnedLeft':
-    {
-      backgroundColor: '#A5F3FC !important',
-    },
+  {
+    backgroundColor: '#A5F3FC !important',
+  },
 
   // Student row hover
   '&.std-group-row:hover': {
@@ -94,17 +96,17 @@ export const CrmDataGrid: React.FC = () => {
   const apiRef = useGridApiRef();
 
   // ── Store selectors ──────────────────────────────────────
-  const paginatedStudents  = useDashboardStore(s => s.paginatedStudents);
-  const totalRows          = useDashboardStore(s => s.totalRows);
-  const muiSortModel       = useDashboardStore(s => s.muiSortModel);
-  const paginationModel    = useDashboardStore(s => s.paginationModel);
-  const isLoading          = useDashboardStore(s => s.isLoading);
-  const columnVisibility   = useDashboardStore(s => s.columnVisibility);
-  const expandedRowIds     = useDashboardStore(s => s.expandedRowIds);
-  const setMuiSortModel    = useDashboardStore(s => s.setMuiSortModel);
+  const paginatedStudents = useDashboardStore(s => s.paginatedStudents);
+  const totalRows = useDashboardStore(s => s.totalRows);
+  const muiSortModel = useDashboardStore(s => s.muiSortModel);
+  const paginationModel = useDashboardStore(s => s.paginationModel);
+  const isLoading = useDashboardStore(s => s.isLoading);
+  const columnVisibility = useDashboardStore(s => s.columnVisibility);
+  const expandedRowIds = useDashboardStore(s => s.expandedRowIds);
+  const setMuiSortModel = useDashboardStore(s => s.setMuiSortModel);
   const setPaginationModel = useDashboardStore(s => s.setPaginationModel);
-  const setColumnVisibility= useDashboardStore(s => s.setColumnVisibility);
-  const toggleExpanded     = useDashboardStore(s => s.toggleExpanded);
+  const setColumnVisibility = useDashboardStore(s => s.setColumnVisibility);
+  const toggleExpanded = useDashboardStore(s => s.toggleExpanded);
 
   // ── Build flat student rows ──────────────────────────────
   const rows = useMemo(
@@ -122,7 +124,7 @@ export const CrmDataGrid: React.FC = () => {
   // ── Detail panel content ─────────────────────────────────
   const getDetailPanelContent = useCallback(
     (params: GridRowParams<GridRow>) => {
-      const row = params.row as GridRow;
+      const row = params.row;
       if (row._student.opportunities.length === 0) return null;
       return <OppDetailPanel student={row._student} />;
     },
@@ -133,7 +135,7 @@ export const CrmDataGrid: React.FC = () => {
   // Each opp row is 30px + header row (26px) + section label (32px) + border (2px)
   const getDetailPanelHeight = useCallback(
     (params: GridRowParams<GridRow>) => {
-      const count = (params.row as GridRow)._student.opportunities.length;
+      const count = params.row._student.opportunities.length;
       if (count === 0) return 0;
       // 60px fixed overhead + 30px per row (capped at 10 rows before scroll)
       return Math.min(60 + count * 30, 60 + 10 * 30);
@@ -144,11 +146,11 @@ export const CrmDataGrid: React.FC = () => {
   // ── Row class names ──────────────────────────────────────
   const getRowClassName = useCallback(
     (params: GridRowClassNameParams<GridRow>): string => {
-      const row = params.row as GridRow;
+      const row = params.row;
       const classes = ['std-group-row', 'cursor-pointer'];
 
       const isExpanded = expandedRowIds.has(`std::${String(row.std_id)}`);
-      const hasOpps    = row.opp_count > 0;
+      const hasOpps = row.opp_count > 0;
 
       if (hasOpps && isExpanded) classes.push('std-group-row-active');
 
@@ -253,12 +255,28 @@ export const CrmDataGrid: React.FC = () => {
 
         // Row identity
         getRowId={(row) => row.id}
-        getRowHeight={getRowHeight as any}
-        getRowClassName={getRowClassName as any}
+        getRowHeight={getRowHeight}
+        getRowClassName={getRowClassName}
+
+        // Autosize & Initial State
+        autosizeOnMount
+        autosizeOptions={{
+          expand: true,
+          includeOutliers: true,
+          includeHeaders: true,
+        }}
+        initialState={{
+          rowGrouping: {
+            model: [],
+          },
+          treeData: {
+            defaultGroupingExpansionDepth: 0,
+          },
+        } as GridInitialState & { rowGrouping?: any; treeData?: any }}
 
         // ── Detail panel ──────────────────────────────────
-        getDetailPanelContent={getDetailPanelContent as any}
-        getDetailPanelHeight={getDetailPanelHeight as any}
+        getDetailPanelContent={getDetailPanelContent}
+        getDetailPanelHeight={getDetailPanelHeight}
         detailPanelExpandedRowIds={detailPanelExpandedRowIds}
         onDetailPanelExpandedRowIdsChange={handleDetailPanelExpandedRowIdsChange}
 

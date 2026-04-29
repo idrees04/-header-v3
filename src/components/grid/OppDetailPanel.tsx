@@ -92,11 +92,19 @@ const OppTeamAvatars: React.FC<{ opp: Opportunity }> = ({ opp }) => {
   return (
     <div className="flex items-center justify-center">
       <AvatarGroup
-        max={4}
-        spacing={10}
+        max={3}
+        spacing={2}
         sx={{
-          '& .MuiAvatar-root': { transition: 'transform 0.15s ease' },
-          '& .MuiAvatar-root:hover': { transform: 'scale(1.12)', zIndex: 10 },
+          '& .MuiAvatarGroup-avatar': {
+            border: 'none',
+          },
+          '& .MuiAvatar-root': {
+            transition: 'transform 0.15s ease',
+          },
+          '& .MuiAvatar-root:hover': {
+            transform: 'scale(1.12)',
+            zIndex: 10,
+          },
         }}
       >
         {roles.map((role, idx) => (
@@ -253,8 +261,8 @@ const OPP_COLUMNS: Array<{ label: string; align?: 'center' | 'left'; minWidth?: 
   { label: 'Commence', align: 'left', minWidth: 88 },
   { label: 'Last Change', align: 'left', minWidth: 88 },
   { label: 'Entered', align: 'left', minWidth: 88 },
-  { label: 'Program Info.', align: 'center', minWidth: 90 },
-  { label: 'Sub-Agent', align: 'left', minWidth: 100 },
+  { label: 'Team', align: 'center', minWidth: 90 },
+  // { label: 'Sub-Agent', align: 'left', minWidth: 100 },
 
 ];
 

@@ -90,14 +90,18 @@ export const RoleAvatarsCell = React.memo(
         return (
             <div className="flex justify-center">
                 <AvatarGroup
-                    max={4}
-                    spacing={10}
+                    max={3}
+                    spacing={2}
                     sx={{
+                        '& .MuiAvatarGroup-avatar': {
+                            border: 'none',
+                        },
                         '& .MuiAvatar-root': {
-                            transition: 'transform 0.2s ease',
+                            transition: 'transform 0.15s ease',
                         },
                         '& .MuiAvatar-root:hover': {
-                            transform: 'scale(1.1)',
+                            transform: 'scale(1.12)',
+                            zIndex: 10,
                         },
                     }}
                 >

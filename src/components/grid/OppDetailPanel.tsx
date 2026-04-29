@@ -253,7 +253,7 @@ const OPP_COLUMNS: Array<{ label: string; align?: 'center' | 'left'; minWidth?: 
   { label: 'Commence', align: 'left', minWidth: 88 },
   { label: 'Last Change', align: 'left', minWidth: 88 },
   { label: 'Entered', align: 'left', minWidth: 88 },
-  { label: 'Team', align: 'center', minWidth: 90 },
+  { label: 'Program Info.', align: 'center', minWidth: 90 },
   { label: 'Sub-Agent', align: 'left', minWidth: 100 },
 
 ];

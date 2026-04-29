@@ -99,7 +99,7 @@ export const ALL_COLUMNS: CrmColDef[] = [
   // },
   {
     field: 'roles_avatars',
-    headerName: 'TEAM',
+    headerName: 'Std. Office',
     width: 160,
     sortable: false,
     priority: 2,

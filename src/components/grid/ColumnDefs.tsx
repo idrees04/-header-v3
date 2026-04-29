@@ -142,8 +142,8 @@ export const ALL_COLUMNS: CrmColDef[] = [
   },
   {
     field: 'std_subagent',
-    headerName: 'Subagent',
-    width: 52,
+    headerName: 'Sub-Agent',
+    width: 90,
     sortable: true,
     priority: 2,
     align: 'center',

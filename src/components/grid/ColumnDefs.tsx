@@ -11,6 +11,7 @@ import {
   PhoneCell,
   EmailCell,
   PassportCell,
+  StudentSubAgent,
 } from './CellRenderers';
 import { RoleAvatarsCell } from './RoleAvatarsCell';
 
@@ -37,15 +38,15 @@ export const ALL_COLUMNS: CrmColDef[] = [
     priority: 1,
     renderCell: (p: GridRenderCellParams<GridRow>) => <NameCell {...p} />,
   },
-  {
-    field: 'std_crm_number',
-    headerName: 'CRM #',
-    width: 120,
-    sortable: true,
-    pinnable: true,
-    priority: 1,
-    renderCell: (p: GridRenderCellParams<GridRow>) => <CrmCell {...p} />,
-  },
+  // {
+  //   field: 'std_crm_number',
+  //   headerName: 'CRM #',
+  //   width: 120,
+  //   sortable: true,
+  //   pinnable: true,
+  //   priority: 1,
+  //   renderCell: (p: GridRenderCellParams<GridRow>) => <CrmCell {...p} />,
+  // },
   {
     field: 'std_nationality',
     headerName: 'NAT.',
@@ -138,5 +139,15 @@ export const ALL_COLUMNS: CrmColDef[] = [
     align: 'center',
     headerAlign: 'center',
     renderCell: (p: GridRenderCellParams<GridRow>) => <OppCountCell {...p} />,
+  },
+  {
+    field: 'std_subagent',
+    headerName: 'Subagent',
+    width: 52,
+    sortable: true,
+    priority: 2,
+    align: 'center',
+    headerAlign: 'center',
+    renderCell: (p: GridRenderCellParams<GridRow>) => <StudentSubAgent {...p} />,
   },
 ];

@@ -160,6 +160,17 @@ export const StudentStageCell = React.memo((params: GridRenderCellParams<GridRow
   );
 });
 StudentStageCell.displayName = 'StudentStageCell';
+export const StudentSubAgent = React.memo((params: GridRenderCellParams<GridRow>) => {
+  const row = params.row as GridRow;
+  if (!row.std_subagent) return <span className="text-[#D0CEC7] text-[10px]">—</span>;
+  const cfg = getStudentStageConfig(row.std_subagent);
+  return (
+    <Badge variant={cfg.variant} size="sm" dot dotColor={cfg.dot} className="max-w-full">
+      <span className="truncate">{cfg.label}</span>
+    </Badge>
+  );
+});
+StudentSubAgent.displayName = 'StudentSubAgent';
 
 // ── Opportunity count badge ────────────────────────────────
 export const OppCountCell = React.memo((params: GridRenderCellParams<GridRow>) => {

@@ -106,6 +106,11 @@ export const RoleAvatarsCell = React.memo(
                             key={`${role.type}-${index}`}
                             title={<span>{role.tooltip}</span>}
                             arrow
+                            slotProps={{
+                                tooltip: {
+                                    sx: { bgcolor: '#1f2937', color: '#f9fafb', fontSize: '0.75rem' },
+                                },
+                            }}
                         >
                             <Avatar
                                 sx={{

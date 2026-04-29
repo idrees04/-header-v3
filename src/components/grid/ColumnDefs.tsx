@@ -10,6 +10,7 @@ import {
   DateCell,
   PhoneCell,
   EmailCell,
+  PassportCell,
 } from './CellRenderers';
 import { RoleAvatarsCell } from './RoleAvatarsCell';
 
@@ -86,6 +87,14 @@ export const ALL_COLUMNS: CrmColDef[] = [
     sortable: false,
     priority: 4,
     renderCell: (p: GridRenderCellParams<GridRow>) => <EmailCell {...p} />,
+  },
+    {
+    field: 'std_passport',
+    headerName: 'PASSPORT',
+    width: 160,
+    sortable: false,
+    priority: 4,
+    renderCell: (p: GridRenderCellParams<GridRow>) => <PassportCell {...p} />,
   },
   {
     field: 'roles_avatars',

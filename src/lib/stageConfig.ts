@@ -1,4 +1,4 @@
-import type { BadgeProps } from '../components/ui/Badge';
+import type { BadgeProps } from '../components/ui/Badgecopy';
 
 export interface StageConfig {
   variant: BadgeProps['variant'];

@@ -59,57 +59,24 @@ export const RoleAvatarsCell = React.memo(
             }
         };
 
-        // ✅ Role mapping
-        if (row.kind === 'student') {
-            pushRole(
-                row.std_adm_officer,
-                `Student - Admission Officer: ${row.std_adm_officer}`,
-                'adm_officer'
-            );
+        // Student-level team roles (opp rows no longer rendered in the grid)
+        pushRole(
+            row.std_adm_officer,
+            `Admission Officer: ${row.std_adm_officer}`,
+            'adm_officer'
+        );
 
-            pushRole(
-                row.std_counselor,
-                `Student - Counsellor: ${row.std_counselor}`,
-                'counselor'
-            );
+        pushRole(
+            row.std_counselor,
+            `Counsellor: ${row.std_counselor}`,
+            'counselor'
+        );
 
-            pushRole(
-                row.std_office,
-                `Student is under Office: ${row.std_office}`,
-                'office'
-            );
-
-            // 🔥 Sub-agent now correctly ignored if "—" or empty/null
-            // pushRole(
-            //     row.std_subagent,
-            //     `Sub-Agent: ${row.std_subagent}`,
-            //     'subagent'
-            // );
-        } else {
-            pushRole(
-                row.opp_adm_officer,
-                `Program-Admission Officer: ${row.opp_adm_officer}`,
-                'adm_officer'
-            );
-
-            pushRole(
-                row.opp_counselor,
-                `Program - Counsellor: ${row.opp_counselor}`,
-                'counselor'
-            );
-
-            pushRole(
-                row.opp_office,
-                `Program is under Office: ${row.opp_office}`,
-                'office'
-            );
-
-            // pushRole(
-            //     row.opp_subagent,
-            //     `Sub-Agent: ${row.opp_subagent}`,
-            //     'subagent'
-            // );
-        }
+        pushRole(
+            row.std_office,
+            `Office: ${row.std_office}`,
+            'office'
+        );
 
         // ✅ Empty state
         if (roles.length === 0) {

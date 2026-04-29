@@ -1,5 +1,5 @@
-import React, { useMemo, useCallback, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useMemo, useCallback } from 'react';
+import { motion } from 'framer-motion';
 import {
   DataGridPro,
   useGridApiRef,
@@ -7,150 +7,85 @@ import {
   type GridSortModel,
   type GridPaginationModel,
   type GridRowClassNameParams,
-  type GridColumnGroupingModel,
+  type GridRowId,
 } from '@mui/x-data-grid-pro';
 import { PAGE_SIZE_OPTIONS, useDashboardStore } from '@/store/dashboardStore';
 import { buildGridRows, type GridRow } from '../../lib/gridRows';
-import { ALL_COLUMNS, COLUMN_GROUPS } from './ColumnDefs';
+import { ALL_COLUMNS } from './ColumnDefs';
 import { GridToolbarComposite } from './GridToolbarComposite';
 import { GridNoRows } from './GridNoRows';
 import { GridFooterComposite } from './GridFooterComposite';
+import { OppDetailPanel } from './OppDetailPanel';
 
-// ── Row height getter ─────────────────────────────────────
-const getRowHeight = (params: { model: GridRow }) =>
-  params.model.kind === 'student' ? 32 : 28;
+// ── Row height getter ──────────────────────────────────────
+const getRowHeight = () => 32;
 
-// ── Row class names ───────────────────────────────────────
-// const getRowClassName = (params: GridRowClassNameParams<GridRow>): string => {
-//   const row = params.row as GridRow;
-//   const classes: string[] = [];
-//   if (row.kind === 'student') classes.push('std-group-row cursor-pointer');
-//   if (row.kind === 'opportunity') classes.push('opp-child-row');
-//   if (row.kind === 'opportunity' && row.isLastOpp) classes.push('opp-last-child');
-//   if (row.kind === 'opportunity') classes.push('opp-indent-border');
-//   return classes.join(' ');
-// };
-
-// ── Animated Row ─────────────────────────────────────────
-// Framer Motion wraps are injected via sx slotProps on DataGridPro
-// We use a CSS-var + inline-style trick for zero-jitter hover scale
+// ── Row sx ────────────────────────────────────────────────
 const ROW_SX = {
+  // Student row base
   '&.std-group-row': {
-    background: 'var(--crm-row-std-bg)',
+    background: 'var(--crm-row-std-bg, #FFFFFF)',
     fontWeight: 500,
-    '& .MuiDataGrid-cell': {
-      borderBottom: 'none',
-    },
   },
 
-  // Active / Expanded row (RED)
+  // Student row — expanded / active (cyan highlight)
   '&.std-group-row-active, &.std-group-row-active .MuiDataGrid-cell, &.std-group-row-active .MuiDataGrid-cell--pinnedLeft':
-  {
-    backgroundColor: '#FEE2E2 !important',
-  },
-
+    {
+      backgroundColor: '#CFFAFE !important',
+    },
 
   '&.std-group-row-active:hover, &.std-group-row-active:hover .MuiDataGrid-cell, &.std-group-row-active:hover .MuiDataGrid-cell--pinnedLeft':
-  {
-    backgroundColor: '#FECACA !important',
-  },
-
-  '&.opp-child-row': {
-    background: 'var(--crm-row-opp-bg)',
-    '& .MuiDataGrid-cell:first-of-type': {
-      borderLeft: '2.5px solid rgba(43,127,212,0.28)',
+    {
+      backgroundColor: '#A5F3FC !important',
     },
-  },
-  // '&.opp-child-row': {
-  //   background: 'var(--crm-row-opp-bg)',
-  // },
-  '& .opp-section-header .MuiDataGrid-cell': {
-    backgroundColor: '#F0EFEB !important',
-    fontWeight: 700,
-    fontSize: '10px',
-    textTransform: 'uppercase',
-    letterSpacing: '0.5px',
-    borderBottom: '1px solid rgba(0,0,0,0.15)',
-  },
-  '& .opp-child-row-even .MuiDataGrid-cell': {
-    backgroundColor: '#FFFFFF !important',
-  },
 
-  '& .opp-child-row-odd .MuiDataGrid-cell': {
-    backgroundColor: '#EDECE8 !important',
-  },
-
-  '&.opp-last-child': {
-    borderBottom: '2px solid rgba(0,0,0,0.1) !important',
-  },
-  '& .opp-group-first .MuiDataGrid-cell': {
-    borderTop: '1px solid oklch(71.5% 0.143 215.221) !important',
-  },
-
-  '& .opp-group-last .MuiDataGrid-cell': {
-    borderBottom: '1px solid oklch(71.5% 0.143 215.221) !important',
-  },
-
-  '& .opp-child-row .MuiDataGrid-cell:first-of-type': {
-    borderLeft: '1px solid oklch(71.5% 0.143 215.221) !important',
-  },
-
-  '& .opp-group-first .MuiDataGrid-cell:first-of-type': {
-    borderTopLeftRadius: '2px',
-  },
-
-  '& .opp-group-first .MuiDataGrid-cell:last-of-type': {
-    borderTopRightRadius: '2px',
-  },
-
-  '& .opp-group-last .MuiDataGrid-cell:first-of-type': {
-    borderBottomLeftRadius: '2px',
-  },
-
-  '& .opp-group-last .MuiDataGrid-cell:last-of-type': {
-    borderBottomRightRadius: '2px',
-  },
+  // Student row hover
   '&.std-group-row:hover': {
     background: '#EFF0EE',
-    transform: 'scaleY(1.005)',
-    transformOrigin: 'center',
-    boxShadow:
-      '0 2px 10px rgba(0,0,0,0.07), 0 1px 3px rgba(0,0,0,0.04)',
     zIndex: 1,
     position: 'relative',
-    transition:
-      'transform 150ms cubic-bezier(0.22,1,0.36,1), box-shadow 150ms cubic-bezier(0.22,1,0.36,1), background 150ms',
   },
 
-  '&.opp-child-row:hover': {
-    background: '#F5F4F1',
-    transition: 'background 150ms',
+  // Pinned cell hover sync
+  '&.std-group-row:hover .MuiDataGrid-cell--pinnedLeft': {
+    backgroundColor: '#EFF0EE !important',
   },
 
+  '&.std-group-row-active .MuiDataGrid-cell--pinnedLeft': {
+    backgroundColor: '#CFFAFE !important',
+  },
+
+  // Selection
   '&.Mui-selected': {
     background: 'rgba(43,127,212,0.06) !important',
   },
-
   '&.Mui-selected:hover': {
     background: 'rgba(43,127,212,0.10) !important',
   },
 };
 
-// ── Column group header SX ────────────────────────────────
-const COL_GROUP_SX = {
-  '& .MuiDataGrid-columnGroupHeader': {
-    background: 'var(--crm-header-bg)',
-    borderBottom: '1px solid rgba(0,0,0,0.08)',
-    height: '22px !important',
-    minHeight: '22px !important',
+// ── Main column header sx ─────────────────────────────────
+const HEADER_SX = {
+  '& .MuiDataGrid-columnHeader': {
+    background: 'var(--crm-header-bg, #F5F4F1)',
   },
-  '& .MuiDataGrid-columnGroupHeaderTitle': {
-    fontSize: '9px !important',
-    fontWeight: '700 !important',
-    textTransform: 'uppercase !important',
-    letterSpacing: '0.8px !important',
+  '& .MuiDataGrid-columnHeaderTitle': {
     color: '#18181A !important',
-    padding: '0 8px !important',
+    fontSize: '10px !important',
+    fontWeight: '700 !important',
+    textTransform: 'uppercase',
+    letterSpacing: '0.5px',
+  },
+  '& .MuiDataGrid-columnHeader--sorted .MuiDataGrid-columnHeaderTitle': {
+    color: 'var(--crm-blue, #2B7FD4) !important',
+  },
+};
+
+// ── Detail panel sx ───────────────────────────────────────
+const DETAIL_PANEL_SX = {
+  // Remove the default MUI detail panel border / shadow
+  '& .MuiDataGrid-detailPanel': {
+    overflow: 'visible',
   },
 };
 
@@ -158,106 +93,71 @@ const COL_GROUP_SX = {
 export const CrmDataGrid: React.FC = () => {
   const apiRef = useGridApiRef();
 
-  // Store selectors (stable refs)
-  const paginatedStudents = useDashboardStore(s => s.paginatedStudents);
-  const totalRows = useDashboardStore(s => s.totalRows);
-  const muiSortModel = useDashboardStore(s => s.muiSortModel);
-  const paginationModel = useDashboardStore(s => s.paginationModel);
-  const isLoading = useDashboardStore(s => s.isLoading);
-  const columnVisibility = useDashboardStore(s => s.columnVisibility);
-  const expandedRowIds = useDashboardStore(s => s.expandedRowIds);
-  const setMuiSortModel = useDashboardStore(s => s.setMuiSortModel);
+  // ── Store selectors ──────────────────────────────────────
+  const paginatedStudents  = useDashboardStore(s => s.paginatedStudents);
+  const totalRows          = useDashboardStore(s => s.totalRows);
+  const muiSortModel       = useDashboardStore(s => s.muiSortModel);
+  const paginationModel    = useDashboardStore(s => s.paginationModel);
+  const isLoading          = useDashboardStore(s => s.isLoading);
+  const columnVisibility   = useDashboardStore(s => s.columnVisibility);
+  const expandedRowIds     = useDashboardStore(s => s.expandedRowIds);
+  const setMuiSortModel    = useDashboardStore(s => s.setMuiSortModel);
   const setPaginationModel = useDashboardStore(s => s.setPaginationModel);
-  const setColumnVisibility = useDashboardStore(s => s.setColumnVisibility);
-  const toggleExpanded = useDashboardStore(s => s.toggleExpanded);
+  const setColumnVisibility= useDashboardStore(s => s.setColumnVisibility);
+  const toggleExpanded     = useDashboardStore(s => s.toggleExpanded);
 
-  const getRowClassName = (params: GridRowClassNameParams<GridRow>): string => {
-    const row = params.row;
-    const classes: string[] = [];
-
-    if (row.kind === 'student') {
-      classes.push('std-group-row', 'cursor-pointer');
-
-      const hasChildren = row.opp_count > 0;
-      const isExpanded = expandedRowIds.has(`std::${String(row.std_id)}`);
-
-      if (hasChildren && isExpanded) {
-        classes.push('std-group-row-active');
-      }
-    }
-
-    if (row.kind === 'opportunity') {
-      classes.push('opp-child-row', 'opp-indent-border');
-
-      if (row.opp_row_index != null) {
-        classes.push(
-          row.opp_row_index % 2 === 0
-            ? 'opp-child-row-even'
-            : 'opp-child-row-odd'
-        );
-      }
-
-      // 🔥 GROUP BORDER LOGIC
-      if (row.opp_row_index === 0) {
-        classes.push('opp-group-first');
-      }
-
-      if (row.isLastOpp) {
-        classes.push('opp-group-last');
-        classes.push('opp-last-child');
-      }
-
-      // middle rows
-      if (row?.opp_row_index > 0 && !row.isLastOpp) {
-        classes.push('opp-group-middle');
-      }
-    }
-    if (row.kind === 'opp_header') {
-      classes.push('opp-section-header');
-    }
-
-    return classes.join(' ');
-  };
-  // Build flat rows from paginated students (memoized)
+  // ── Build flat student rows ──────────────────────────────
   const rows = useMemo(
     () => buildGridRows(paginatedStudents),
     [paginatedStudents]
   );
 
-  // Filtered rows: only show student rows + expanded children
-  const visibleRows = useMemo((): GridRow[] => {
-    const out: GridRow[] = [];
+  // ── Map store Set<string> → Set<GridRowId> for MUI prop ──
+  // The store keeps `std::${id}` keys; this version of MUI expects Set<GridRowId>.
+  const detailPanelExpandedRowIds = useMemo<Set<GridRowId>>(
+    () => new Set<GridRowId>(expandedRowIds),
+    [expandedRowIds]
+  );
 
-    for (const row of rows) {
-      const parentId = `std::${row.std_id}`;
-      const isExpanded = expandedRowIds.has(parentId);
+  // ── Detail panel content ─────────────────────────────────
+  const getDetailPanelContent = useCallback(
+    (params: GridRowParams<GridRow>) => {
+      const row = params.row as GridRow;
+      if (row._student.opportunities.length === 0) return null;
+      return <OppDetailPanel student={row._student} />;
+    },
+    []
+  );
 
-      // 1️⃣ Always show student row
-      if (row.kind === 'student') {
-        out.push(row);
-        continue;
-      }
+  // ── Detail panel height ──────────────────────────────────
+  // Each opp row is 30px + header row (26px) + section label (32px) + border (2px)
+  const getDetailPanelHeight = useCallback(
+    (params: GridRowParams<GridRow>) => {
+      const count = (params.row as GridRow)._student.opportunities.length;
+      if (count === 0) return 0;
+      // 60px fixed overhead + 30px per row (capped at 10 rows before scroll)
+      return Math.min(60 + count * 30, 60 + 10 * 30);
+    },
+    []
+  );
 
-      // 2️⃣ Header row (Opportunity Detail)
-      if (row.kind === 'opp_header') {
-        if (isExpanded) {
-          out.push(row);
-        }
-        continue;
-      }
+  // ── Row class names ──────────────────────────────────────
+  const getRowClassName = useCallback(
+    (params: GridRowClassNameParams<GridRow>): string => {
+      const row = params.row as GridRow;
+      const classes = ['std-group-row', 'cursor-pointer'];
 
-      // 3️⃣ Opportunity rows
-      if (row.kind === 'opportunity') {
-        if (isExpanded) {
-          out.push(row);
-        }
-      }
-    }
+      const isExpanded = expandedRowIds.has(`std::${String(row.std_id)}`);
+      const hasOpps    = row.opp_count > 0;
 
-    return out;
-  }, [rows, expandedRowIds]);
+      if (hasOpps && isExpanded) classes.push('std-group-row-active');
 
-  // Handlers (stable)
+      return classes.join(' ');
+    },
+    [expandedRowIds]
+  );
+
+  // ── Handlers ────────────────────────────────────────────
   const handleSortChange = useCallback(
     (model: GridSortModel) => setMuiSortModel(model),
     [setMuiSortModel]
@@ -273,83 +173,61 @@ export const CrmDataGrid: React.FC = () => {
     [setColumnVisibility]
   );
 
-  // Row click — toggle expand on student rows
+  // Row click — toggle expand on student rows that have opportunities
   const handleRowClick = useCallback(
     (params: GridRowParams<GridRow>) => {
       const row = params.row as GridRow;
-      if (row.kind === 'student' && row.opp_count > 0) {
+      if (row.opp_count > 0) {
         toggleExpanded(`std::${row.std_id}`);
       }
     },
     [toggleExpanded]
   );
 
-  // Column group model (memoized)
-  const columnGroupingModel = useMemo(
-    (): GridColumnGroupingModel => COLUMN_GROUPS,
-    []
+  // Handle MUI's own detail panel toggle (e.g. keyboard, programmatic)
+  const handleDetailPanelExpandedRowIdsChange = useCallback(
+    (ids: Set<GridRowId>) => {
+      // Sync back to store: compute add/remove delta
+      const next = new Set<string>(Array.from(ids).map(String));
+      const prev = expandedRowIds;
+
+      // rows that are now expanded but weren't before
+      for (const id of next) {
+        if (!prev.has(id)) toggleExpanded(id);
+      }
+      // rows that were expanded but are no longer
+      for (const id of prev) {
+        if (!next.has(id)) toggleExpanded(id);
+      }
+    },
+    [expandedRowIds, toggleExpanded]
   );
 
-  // Merge row sx
+  // ── Merged sx ────────────────────────────────────────────
   const sx = useMemo(
     () => ({
       height: '100%',
       ...ROW_SX,
-      ...COL_GROUP_SX,
-      // Column header text
-      '& .MuiDataGrid-columnHeaderTitle': {
-        color: '#18181A !important',
-      },
+      ...HEADER_SX,
+      ...DETAIL_PANEL_SX,
 
       // Cell hover
       '& .MuiDataGrid-cell:hover': {
         background: 'rgba(0,0,0,0.02)',
       },
 
-      // Active sorted column header
-      '& .MuiDataGrid-columnHeader--sorted .MuiDataGrid-columnHeaderTitle': {
-        color: 'var(--crm-blue) !important',
-      },
-
-      // Pinned columns container
+      // Pinned columns shadow
       '& .MuiDataGrid-pinnedColumns--left': {
         boxShadow: '2px 0 8px rgba(0,0,0,0.05)',
         borderRight: '1px solid rgba(0,0,0,0.1)',
       },
 
-      // Divider after student section
+      // Visual divider after APPS column
       '& .MuiDataGrid-cell[data-field="opp_count"]': {
         borderRight: '1.5px solid rgba(0,0,0,0.08)',
       },
-
       '& .MuiDataGrid-columnHeader[data-field="opp_count"]': {
         borderRight: '1.5px solid rgba(0,0,0,0.08)',
-      },
-
-      // Optional: ensure pinned cells inherit row hover for normal student rows
-      '& .std-group-row:hover .MuiDataGrid-cell--pinnedLeft': {
-        backgroundColor: '#EFF0EE !important',
-      },
-      '& .std-group-row:active .MuiDataGrid-cell--pinnedLeft': {
-        backgroundColor: '#CFFAFE !important',
-      },
-      '& .std-group-row-active .MuiDataGrid-cell--pinnedLeft': {
-        backgroundColor: '#CFFAFE !important',
-      },
-
-      '& .std-group-row-active': {
-        backgroundColor: '#CFFAFE !important', // cyan-100
-      },
-
-      '& .std-group-row-active .MuiDataGrid-cell': {
-        backgroundColor: '#CFFAFE !important',
-      },
-
-
-
-      // Optional: ensure pinned cells inherit opportunity hover
-      '& .opp-child-row:hover .MuiDataGrid-cell--pinnedLeft': {
-        backgroundColor: '#F5F4F1 !important',
       },
     }),
     []
@@ -364,14 +242,20 @@ export const CrmDataGrid: React.FC = () => {
     >
       <DataGridPro<GridRow>
         apiRef={apiRef}
-        rows={visibleRows}
+        rows={rows}
         columns={ALL_COLUMNS}
-        columnGroupingModel={columnGroupingModel}
         showToolbar
+
         // Row identity
         getRowId={(row) => row.id}
         getRowHeight={getRowHeight as any}
         getRowClassName={getRowClassName as any}
+
+        // ── Detail panel ──────────────────────────────────
+        getDetailPanelContent={getDetailPanelContent as any}
+        getDetailPanelHeight={getDetailPanelHeight as any}
+        detailPanelExpandedRowIds={detailPanelExpandedRowIds}
+        onDetailPanelExpandedRowIdsChange={handleDetailPanelExpandedRowIdsChange}
 
         // Server-side simulation
         rowCount={totalRows}
@@ -393,7 +277,7 @@ export const CrmDataGrid: React.FC = () => {
         columnVisibilityModel={columnVisibility}
         onColumnVisibilityModelChange={handleColumnVisibilityChange}
 
-        // Pinned columns
+        // Pinned columns (student name + CRM)
         pinnedColumns={{ left: ['std_name', 'std_crm_number'] }}
 
         // Density

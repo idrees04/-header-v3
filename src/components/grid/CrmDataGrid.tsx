@@ -70,7 +70,7 @@ const HEADER_SX = {
     background: 'var(--crm-header-bg, #F5F4F1)',
   },
   '& .MuiDataGrid-columnHeaderTitle': {
-    color: '#18181A !important',
+    color: '#000000 !important',
     fontSize: '10px !important',
     fontWeight: '700 !important',
     textTransform: 'uppercase',
@@ -210,6 +210,11 @@ export const CrmDataGrid: React.FC = () => {
       ...ROW_SX,
       ...HEADER_SX,
       ...DETAIL_PANEL_SX,
+
+      // Text color for cells
+      '& .MuiDataGrid-cell': {
+        color: '#000000',
+      },
 
       // Cell hover
       '& .MuiDataGrid-cell:hover': {

@@ -165,9 +165,10 @@ export const StudentSubAgent = React.memo((params: GridRenderCellParams<GridRow>
   if (!row.std_subagent) return <span className="text-[#D0CEC7] text-[10px]">—</span>;
   const cfg = getStudentStageConfig(row.std_subagent);
   return (
-    <Badge variant={cfg.variant} size="sm" dot dotColor={cfg.dot} className="max-w-full">
-      <span className="truncate">{cfg.label}</span>
-    </Badge>
+     <TooltipCell
+      value={cfg.label}
+      className="font-mono text-[10.5px] text-[#18181A]"
+    />
   );
 });
 StudentSubAgent.displayName = 'StudentSubAgent';

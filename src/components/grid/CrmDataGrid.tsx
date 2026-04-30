@@ -74,7 +74,7 @@ const HEADER_SX = {
   },
   '& .MuiDataGrid-columnHeaderTitle': {
     color: '#000000 !important',
-    fontSize: '10px !important',
+    fontSize: '0.625rem !important',
     fontWeight: '700 !important',
     textTransform: 'uppercase',
     letterSpacing: '0.5px',
@@ -354,7 +354,7 @@ export const CrmDataGrid: React.FC = () => {
 
         // Style
         sx={sx}
-        style={{ fontFamily: 'var(--font-body)', fontSize: '11.5px' }}
+        style={{ fontFamily: 'var(--font-body)', fontSize: '0.71875rem' }}
 
         // A11y
         aria-label="Student CRM Pipeline"

@@ -16,7 +16,7 @@ const TooltipText: React.FC<{ value?: string | null; className?: string }> = ({
   className = '',
 }) => {
   const text = dash(value);
-  if (text === '—') return <span className="text-[#C4C2BB] text-[10px]">—</span>;
+  if (text === '—') return <span className="text-black text-[0.625rem]">—</span>;
   return (
     <Tooltip
       title={text}
@@ -24,7 +24,7 @@ const TooltipText: React.FC<{ value?: string | null; className?: string }> = ({
       slotProps={{ tooltip: { sx: { bgcolor: '#1f2937', color: '#f9fafb', fontSize: '0.7rem' } } }}
     >
       <span
-        className={`block overflow-hidden text-ellipsis whitespace-nowrap max-w-full text-[10.5px] text-[#18181A] ${className}`}
+        className={`block overflow-hidden text-ellipsis whitespace-nowrap max-w-full text-[0.875rem] text-black ${className}`}
       >
         {text}
       </span>
@@ -87,7 +87,7 @@ const OppTeamAvatars: React.FC<{ opp: Opportunity }> = ({ opp }) => {
     });
 
   if (roles.length === 0)
-    return <span className="text-[#C4C2BB] text-[10px]">—</span>;
+    return <span className="text-black text-[0.625rem]">—</span>;
 
   return (
     <div className="flex items-center justify-center">
@@ -157,7 +157,7 @@ const StageBadge: React.FC<{ stage?: string | null }> = ({ stage }) => {
 
 const LevelBadge: React.FC<{ level?: string | null }> = ({ level }) => {
   const cfg = getLevelConfig(level ?? null);
-  if (!cfg) return <span className="text-[#C4C2BB] text-[10px]">—</span>;
+  if (!cfg) return <span className="text-black text-[0.625rem]">—</span>;
   return <Badge variant={cfg.variant} size="sm">{cfg.label}</Badge>;
 };
 
@@ -167,8 +167,8 @@ const LevelBadge: React.FC<{ level?: string | null }> = ({ level }) => {
 
 const DateVal: React.FC<{ value?: string | null }> = ({ value }) => {
   const text = dash(value);
-  if (text === '—') return <span className="text-[#C4C2BB] text-[10px]">—</span>;
-  return <span className="font-mono text-[10px] text-[#18181A] whitespace-nowrap">{text}</span>;
+  if (text === '—') return <span className="text-black text-[0.625rem]">—</span>;
+  return <span className="font-mono text-[0.625rem] text-black whitespace-nowrap">{text}</span>;
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -188,11 +188,11 @@ const OppRow: React.FC<{ opp: Opportunity; index: number }> = ({ opp, index }) =
       {/* # */}
       <td className="px-2 text-center">
         <span
-          className="inline-flex items-center justify-center font-mono font-bold text-[10px] rounded"
+          className="inline-flex items-center justify-center font-mono font-bold text-[0.625rem] rounded"
           style={{
             minWidth: 20,
             height: 18,
-            color: '#5C5B57',
+            color: '#000000',
             background: '#ECEAE5',
             padding: '0 4px',
           }}
@@ -212,7 +212,7 @@ const OppRow: React.FC<{ opp: Opportunity; index: number }> = ({ opp, index }) =
       </td>
 
       {/* Level */}
-      <td className="px-2 text-center" style={{ minWidth: 64 }}>
+      <td className="px-2 text-left" style={{ minWidth: 64 }}>
         <LevelBadge level={opp.opp_course_level} />
       </td>
 
@@ -256,48 +256,15 @@ const OPP_COLUMNS: Array<{ label: string; align?: 'center' | 'left'; minWidth?: 
   { label: '#', align: 'center', minWidth: 32 },
   { label: 'Program', align: 'left', minWidth: 140 },
   { label: 'Institute', align: 'left', minWidth: 120 },
-  { label: 'Level', align: 'center', minWidth: 64 },
+  { label: 'Level', align: 'left', minWidth: 64 },
   { label: 'Stage', align: 'left', minWidth: 110 },
   { label: 'Commence', align: 'left', minWidth: 88 },
   { label: 'Last Change', align: 'left', minWidth: 88 },
   { label: 'Entered', align: 'left', minWidth: 88 },
-  { label: 'Team', align: 'center', minWidth: 90 },
+  { label: 'Program Info.', align: 'center', minWidth: 90 },
   { label: 'Sub-Agent', align: 'left', minWidth: 100 },
 
 ];
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Panel header strip
-// ─────────────────────────────────────────────────────────────────────────────
-
-const PanelHeader: React.FC<{ oppCount: number }> = ({ oppCount }) => (
-  <div
-    className="flex items-center gap-2 px-4 py-1.5"
-    style={{
-      background: '#E8E6E0',
-      borderBottom: '1px solid rgba(0,0,0,0.08)',
-    }}
-  >
-    <span
-      className="text-[9px] font-bold uppercase tracking-[0.8px] text-[#5C5B57]"
-    >
-      ◈ Application Records
-    </span>
-    <span
-      className="inline-flex items-center justify-center font-mono font-bold text-[9px] rounded-full"
-      style={{
-        minWidth: 18,
-        height: 18,
-        color: '#2B7FD4',
-        background: 'rgba(43,127,212,0.1)',
-        border: '1px solid rgba(43,127,212,0.25)',
-        padding: '0 5px',
-      }}
-    >
-      {oppCount}
-    </span>
-  </div>
-);
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Main exported component
@@ -320,7 +287,7 @@ export const OppDetailPanel: React.FC<OppDetailPanelProps> = ({ student }) => {
           borderBottom: '2px solid rgba(0,0,0,0.09)',
         }}
       >
-        <span className="text-[10px] text-[#9B9992] italic">No application records found.</span>
+        <span className="text-[0.625rem] text-black italic">No application records found.</span>
       </div>
     );
   }
@@ -334,8 +301,7 @@ export const OppDetailPanel: React.FC<OppDetailPanelProps> = ({ student }) => {
         overflowX: 'auto',
       }}
     >
-      {/* Section label */}
-      <PanelHeader oppCount={opps.length} />
+      {/* Section label (removed) */}
 
       {/* Sub-table */}
       <table
@@ -362,11 +328,11 @@ export const OppDetailPanel: React.FC<OppDetailPanelProps> = ({ student }) => {
                   textAlign: col.align ?? 'left',
                   minWidth: col.minWidth,
                   padding: '0 8px',
-                  fontSize: '9px',
+                  fontSize: '0.5625rem',
                   fontWeight: 700,
                   textTransform: 'uppercase',
                   letterSpacing: '0.6px',
-                  color: '#5C5B57',
+                  color: '#000000',
                   whiteSpace: 'nowrap',
                   borderRight: '1px solid rgba(0,0,0,0.06)',
                   position: 'sticky',

@@ -85,11 +85,12 @@ export const GridToolbarComposite: React.FC = () => {
           <Input
             ref={inputRef}
             type="text"
-            placeholder="Search students, CRM#, office, program…"
+            placeholder="Search students"
             value={searchQuery}
             onChange={handleSearch}
             onClear={handleClear}
             leftIcon={<SearchIcon />}
+            className="placeholder:text-black placeholder:opacity-100"
           />
         </div>
 
@@ -104,7 +105,7 @@ export const GridToolbarComposite: React.FC = () => {
                 size: 'small',
                 sx: {
                   fontFamily: 'var(--font-body)',
-                  fontSize: '10.5px',
+                  fontSize: '0.875rem',
                   textTransform: 'none',
                   color: '#000000',
                   padding: '3px 8px',
@@ -121,7 +122,7 @@ export const GridToolbarComposite: React.FC = () => {
                 size: 'small',
                 sx: {
                   fontFamily: 'var(--font-body)',
-                  fontSize: '10.5px',
+                  fontSize: '0.875rem',
                   textTransform: 'none',
                   color: '#000000',
                   padding: '3px 8px',
@@ -151,22 +152,22 @@ export const GridToolbarComposite: React.FC = () => {
         </motion.div>
 
         {/* Stats */}
-        <div className="ml-auto text-[10px] text-black font-mono tabular-nums whitespace-nowrap">
+        <div className="ml-auto text-[0.625rem] text-black font-mono tabular-nums whitespace-nowrap">
           <span className="font-semibold text-black">
             {totalRows.toLocaleString()}
           </span>{' '}
-          students
+          Students
           &nbsp;·&nbsp;
           <span className="font-semibold text-black">
             {totalOpps.toLocaleString()}
           </span>{' '}
-          opps
+          Programs
         </div>
       </div>
 
       {/* Row 2 */}
       <div className="flex items-center gap-1 px-3 pb-2 flex-wrap">
-        <span className="text-[9px] font-bold uppercase tracking-[0.6px] text-black mr-1">
+        <span className="text-[0.5625rem] font-bold uppercase tracking-[0.6px] text-black mr-1">
           Filter:
         </span>
 
@@ -175,7 +176,7 @@ export const GridToolbarComposite: React.FC = () => {
             key={f.mode}
             onClick={() => setFilterMode(f.mode)}
             className={[
-              'inline-flex items-center rounded-full px-2.5 py-0.5 text-[10px] font-medium border transition-all duration-150 cursor-pointer',
+              'inline-flex items-center rounded-full px-2.5 py-0.5 text-[0.625rem] font-medium border transition-all duration-150 cursor-pointer',
               filterMode === f.mode
                 ? 'bg-[#18181A] text-white border-[#18181A]'
                 : 'bg-white text-black border-[rgba(0,0,0,0.10)] hover:border-[rgba(0,0,0,0.18)] hover:bg-[#F2F1EE]',

@@ -1,0 +1,1 @@
+export const fontFamily = `var(--font-primary)`;

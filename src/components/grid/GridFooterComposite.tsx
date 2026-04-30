@@ -11,12 +11,12 @@ import { Button } from '@/components/ui/button';
 
 const ChevronLeft = () => (
   <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-    <path d="M7.5 2L3.5 6l4 4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M7.5 2L3.5 6l4 4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
   </svg>
 );
 const ChevronRight = () => (
   <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-    <path d="M4.5 2L8.5 6l-4 4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M4.5 2L8.5 6l-4 4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
   </svg>
 );
 
@@ -25,16 +25,16 @@ const ChevronRight = () => (
  * Uses MUI's GridPagination as a sub-component (composite).
  */
 export const GridFooterComposite: React.FC = () => {
-  const apiRef = useGridApiContext();
-  const paginationModel = useDashboardStore(s => s.paginationModel);
-  const totalRows = useDashboardStore(s => s.totalRows);
-  const setPagination = useDashboardStore(s => s.setPaginationModel);
+  const apiRef           = useGridApiContext();
+  const paginationModel  = useDashboardStore(s => s.paginationModel);
+  const totalRows        = useDashboardStore(s => s.totalRows);
+  const setPagination    = useDashboardStore(s => s.setPaginationModel);
 
   const totalPages = Math.max(1, Math.ceil(totalRows / paginationModel.pageSize));
   const currentPage = paginationModel.page + 1;
 
   const start = paginationModel.page * paginationModel.pageSize + 1;
-  const end = Math.min(start + paginationModel.pageSize - 1, totalRows);
+  const end   = Math.min(start + paginationModel.pageSize - 1, totalRows);
 
   const goPrev = useCallback(() => {
     if (paginationModel.page > 0) {
@@ -59,7 +59,7 @@ export const GridFooterComposite: React.FC = () => {
     <div className="flex items-center justify-between px-3 py-1.5 border-t border-[rgba(0,0,0,0.08)] bg-[#F9F8F6] h-9">
       {/* Left: rows per page */}
       <div className="flex items-center gap-2">
-        <span className="text-[10px] text-[#9B9992] whitespace-nowrap">Rows per page:</span>
+        <span className="text-[10px] text-black whitespace-nowrap">Rows per page:</span>
         <select
           value={paginationModel.pageSize}
           onChange={handlePageSize}
@@ -72,16 +72,16 @@ export const GridFooterComposite: React.FC = () => {
       </div>
 
       {/* Center: record range */}
-      <div className="text-[10px] text-[#9B9992] font-mono tabular-nums">
+      <div className="text-[10px] text-black font-mono tabular-nums">
         {totalRows > 0
-          ? <><span className="font-semibold text-[#5C5B57]">{start}–{end}</span> of <span className="font-semibold text-[#5C5B57]">{totalRows}</span> students</>
+          ? <><span className="font-semibold text-black">{start}–{end}</span> of <span className="font-semibold text-black">{totalRows}</span> students</>
           : 'No results'}
       </div>
 
       {/* Right: page navigation */}
       <div className="flex items-center gap-1.5">
-        <span className="text-[10px] text-[#9B9992] font-mono">
-          Page <span className="font-semibold text-[#5C5B57]">{currentPage}</span> / <span className="font-semibold text-[#5C5B57]">{totalPages}</span>
+        <span className="text-[10px] text-black font-mono">
+          Page <span className="font-semibold text-black">{currentPage}</span> / <span className="font-semibold text-black">{totalPages}</span>
         </span>
         <Button
           variant="ghost"

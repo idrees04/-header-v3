@@ -102,7 +102,8 @@ export function calculateColumnWidths<T extends Record<string, unknown>>(
             delete updated.width;
             updated.flex = flexBase;
             updated.minWidth = width;
-            updated.maxWidth = globalMax;
+            // Remove maxWidth so the flex column can stretch fully on large screens
+            delete updated.maxWidth;
             updated.resizable = true;
         } else {
             /**

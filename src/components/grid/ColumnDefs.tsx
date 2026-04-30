@@ -116,7 +116,7 @@ export const ALL_COLUMNS: CrmColDef[] = [
     renderCell: (p: GridRenderCellParams<GridRow>) => {
       const row = p.row as GridRow;
       return (
-        <span className="font-mono text-[10px] text-[#18181A] whitespace-nowrap">
+        <span className="font-mono text-[0.625rem] text-black whitespace-nowrap">
           {row.std_date_entered || '—'}
         </span>
       );

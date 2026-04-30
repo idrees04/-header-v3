@@ -13,7 +13,7 @@ const TooltipCell: React.FC<{
   className?: string;
 }> = ({ value, className = '' }) => {
   const text = value || '—';
-  if (text === '—') return <span className="text-[10px] text-[#C4C2BB]">—</span>;
+  if (text === '—') return <span className="text-[0.625rem] text-black">—</span>;
   return (
     <Tooltip
       title={text}
@@ -53,7 +53,7 @@ export const NameCell = React.memo((params: GridRenderCellParams<GridRow>) => {
         },
       }}
     >
-      <span className="block overflow-hidden text-ellipsis whitespace-nowrap max-w-full font-medium text-[11px] text-[#008000]">
+      <span className="block overflow-hidden text-ellipsis whitespace-nowrap max-w-full font-medium text-[0.9375rem] text-[#008000]">
         {displayName || '—'}
       </span>
     </Tooltip>
@@ -67,7 +67,7 @@ export const CrmCell = React.memo((params: GridRenderCellParams<GridRow>) => {
   return (
     <TooltipCell
       value={row.std_crm_number}
-      className="font-mono text-[10.5px] text-[#18181A]"
+      className="font-mono text-[0.875rem] text-black"
     />
   );
 });
@@ -88,7 +88,7 @@ export const GenderCell = React.memo((params: GridRenderCellParams<GridRow>) => 
       }}
     >
       <span
-        className={`${g === 'female' ? 'text-[#C2507A]' : g === 'male' ? 'text-[#2B7FD4]' : 'text-[#C4C2BB]'}`}
+        className={`${g === 'female' ? 'text-[#C2507A]' : g === 'male' ? 'text-[#2B7FD4]' : 'text-black'}`}
       >
         {g === 'male' ? '♂' : g === 'female' ? '♀' : '—'}
       </span>
@@ -103,7 +103,7 @@ export const PhoneCell = React.memo((params: GridRenderCellParams<GridRow>) => {
   return (
     <TooltipCell
       value={row.std_phone_mobile}
-      className="font-mono text-[10.5px] text-[#18181A]"
+      className="font-mono text-[0.875rem] text-black"
     />
   );
 });
@@ -115,7 +115,7 @@ export const EmailCell = React.memo((params: GridRenderCellParams<GridRow>) => {
   return (
     <TooltipCell
       value={row.std_email}
-      className="text-[10.5px] text-[#18181A]"
+      className="text-[0.875rem] text-black"
     />
   );
 });
@@ -128,7 +128,7 @@ export const PassportCell = React.memo((params: GridRenderCellParams<GridRow>) =
   return (
     <TooltipCell
       value={row.std_passport}
-      className="text-[10.5px] text-[#18181A]"
+      className="text-[0.875rem] text-black"
     />
   );
 });
@@ -138,11 +138,11 @@ export const NatCell = React.memo((params: GridRenderCellParams<GridRow>) => {
   const row = params.row as GridRow;
   const nat = row.std_nationality;
   if (!nat || nat === '—' || nat === '---')
-    return <span className="text-[#D0CEC7]">—</span>;
+    return <span className="text-black">—</span>;
   return (
     <TooltipCell
       value={nat}
-      className="text-[10.5px] text-[#18181A]"
+      className="text-[0.875rem] text-black"
     />
   );
 });
@@ -151,7 +151,7 @@ NatCell.displayName = 'NatCell';
 // ── Student Stage badge ────────────────────────────────────
 export const StudentStageCell = React.memo((params: GridRenderCellParams<GridRow>) => {
   const row = params.row as GridRow;
-  if (!row.std_stage) return <span className="text-[#D0CEC7] text-[10px]">—</span>;
+  if (!row.std_stage) return <span className="text-black text-[0.625rem]">—</span>;
   const cfg = getStudentStageConfig(row.std_stage);
   return (
     <Badge variant={cfg.variant} size="sm" dot dotColor={cfg.dot} className="max-w-full">
@@ -162,12 +162,12 @@ export const StudentStageCell = React.memo((params: GridRenderCellParams<GridRow
 StudentStageCell.displayName = 'StudentStageCell';
 export const StudentSubAgent = React.memo((params: GridRenderCellParams<GridRow>) => {
   const row = params.row as GridRow;
-  if (!row.std_subagent) return <span className="text-[#D0CEC7] text-[10px]">—</span>;
+  if (!row.std_subagent) return <span className="text-black text-[0.625rem]">—</span>;
   const cfg = getStudentStageConfig(row.std_subagent);
   return (
     <TooltipCell
       value={cfg.label}
-      className="font-mono text-[10.5px] text-[#18181A]"
+      className="font-mono text-[0.875rem] text-black"
     />
   );
 });
@@ -183,7 +183,7 @@ export const OppCountCell = React.memo((params: GridRenderCellParams<GridRow>) =
     <span
       className="inline-flex items-center justify-center font-bold font-mono rounded-[4px] border"
       style={{
-        fontSize: '11px',
+        fontSize: '0.6875rem',
         color,
         borderColor: color + '44',
         minWidth: 22,
@@ -203,9 +203,9 @@ export const DateCell = React.memo(
     const row = params.row as GridRow;
     const val = row[params.field] as string | undefined;
     if (!val || val === '—')
-      return <span className="text-[#D0CEC7] text-[10px]">—</span>;
+      return <span className="text-black text-[0.625rem]">—</span>;
     return (
-      <span className="font-mono text-[10px] text-[#18181A] whitespace-nowrap">{val}</span>
+      <span className="font-mono text-[0.625rem] text-black whitespace-nowrap">{val}</span>
     );
   }
 );

@@ -7,16 +7,16 @@ import {
   gridPaginationModelSelector,
 } from '@mui/x-data-grid-pro';
 import { useDashboardStore, PAGE_SIZE_OPTIONS } from '../../store/dashboardStore';
-import { Button } from '../ui/Button';
+import { Button } from '@/components/ui/button';
 
 const ChevronLeft = () => (
   <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-    <path d="M7.5 2L3.5 6l4 4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M7.5 2L3.5 6l4 4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 const ChevronRight = () => (
   <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-    <path d="M4.5 2L8.5 6l-4 4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M4.5 2L8.5 6l-4 4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
@@ -25,16 +25,16 @@ const ChevronRight = () => (
  * Uses MUI's GridPagination as a sub-component (composite).
  */
 export const GridFooterComposite: React.FC = () => {
-  const apiRef           = useGridApiContext();
-  const paginationModel  = useDashboardStore(s => s.paginationModel);
-  const totalRows        = useDashboardStore(s => s.totalRows);
-  const setPagination    = useDashboardStore(s => s.setPaginationModel);
+  const apiRef = useGridApiContext();
+  const paginationModel = useDashboardStore(s => s.paginationModel);
+  const totalRows = useDashboardStore(s => s.totalRows);
+  const setPagination = useDashboardStore(s => s.setPaginationModel);
 
   const totalPages = Math.max(1, Math.ceil(totalRows / paginationModel.pageSize));
   const currentPage = paginationModel.page + 1;
 
   const start = paginationModel.page * paginationModel.pageSize + 1;
-  const end   = Math.min(start + paginationModel.pageSize - 1, totalRows);
+  const end = Math.min(start + paginationModel.pageSize - 1, totalRows);
 
   const goPrev = useCallback(() => {
     if (paginationModel.page > 0) {

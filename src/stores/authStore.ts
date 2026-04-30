@@ -25,6 +25,7 @@ function mockLoginApi(username: string, role: string) {
 
 export const useAuthStore = create<AuthState>((set) => ({
   isAuthenticated: false,
+  isHydrated: false,
   fullname: '',
   roles: [],
   branchId: '',
@@ -40,6 +41,7 @@ export const useAuthStore = create<AuthState>((set) => ({
 
     set({
       isAuthenticated: true,
+      isHydrated: true,
       fullname: response.user_full_name,
       roles: response.roles_top_to_bottom,
       branchId: response.branch_manager_secgroup_ids,
@@ -54,6 +56,7 @@ export const useAuthStore = create<AuthState>((set) => ({
     }
     set({
       isAuthenticated: false,
+      isHydrated: true,
       fullname: '',
       roles: [],
       branchId: '',
@@ -71,13 +74,29 @@ export const useAuthStore = create<AuthState>((set) => ({
         const roles = JSON.parse(rolesStr) as string[];
         set({
           isAuthenticated: true,
+          isHydrated: true,
           fullname,
           roles,
           branchId: branchId ?? '',
         });
       } catch {
-        // Invalid data, stay logged out
+        set({
+          isAuthenticated: false,
+          isHydrated: true,
+          fullname: '',
+          roles: [],
+          branchId: '',
+        });
       }
+      return;
     }
+
+    set({
+      isAuthenticated: false,
+      isHydrated: true,
+      fullname: '',
+      roles: [],
+      branchId: '',
+    });
   },
 }));

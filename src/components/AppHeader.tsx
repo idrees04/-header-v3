@@ -1,5 +1,5 @@
 import { memo, useState, useEffect } from 'react';
-import { useNavigate, useLocation } from '@tanstack/react-router';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { LogOut, User, Menu, Sun, Moon, Clock, ChevronRight, Bell } from 'lucide-react';
 import { useAuthStore } from '@/stores/authStore';
@@ -44,7 +44,7 @@ export const AppHeader = memo(function AppHeader() {
 
   const handleLogout = () => {
     logout();
-    navigate({ to: '/' });
+    navigate('/', { replace: true });
   };
 
   const greeting = (() => {

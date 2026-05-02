@@ -30,7 +30,7 @@ export type CrmColDef = GridColDef & {
 export const ALL_COLUMNS: CrmColDef[] = [
   {
     field: 'std_name',
-    headerName: 'STUDENT',
+    headerName: 'Student',
     width: 220,
     minWidth: 180,
     sortable: true,
@@ -49,7 +49,7 @@ export const ALL_COLUMNS: CrmColDef[] = [
   // },
   {
     field: 'std_nationality',
-    headerName: 'NAT.',
+    headerName: 'Nationality',
     width: 75,
     sortable: true,
     priority: 3,
@@ -57,7 +57,7 @@ export const ALL_COLUMNS: CrmColDef[] = [
   },
   {
     field: 'std_gender',
-    headerName: 'G',
+    headerName: 'Gender',
     width: 36,
     sortable: false,
     priority: 4,
@@ -83,7 +83,7 @@ export const ALL_COLUMNS: CrmColDef[] = [
   // },
   {
     field: 'std_email',
-    headerName: 'EMAIL',
+    headerName: 'Email',
     width: 160,
     sortable: false,
     priority: 4,
@@ -99,7 +99,7 @@ export const ALL_COLUMNS: CrmColDef[] = [
   // },
   {
     field: 'roles_avatars',
-    headerName: 'Std. Office',
+    headerName: 'Student Office',
     width: 160,
     sortable: false,
     priority: 2,
@@ -109,14 +109,14 @@ export const ALL_COLUMNS: CrmColDef[] = [
   },
   {
     field: 'std_date_entered',
-    headerName: 'ENROLLED',
+    headerName: 'Enrolled',
     width: 90,
     sortable: true,
     priority: 3,
     renderCell: (p: GridRenderCellParams<GridRow>) => {
       const row = p.row as GridRow;
       return (
-        <span className="font-mono text-[0.625rem] text-black whitespace-nowrap">
+        <span className="text-[0.875rem] text-black whitespace-nowrap">
           {row.std_date_entered || '—'}
         </span>
       );
@@ -124,7 +124,7 @@ export const ALL_COLUMNS: CrmColDef[] = [
   },
   {
     field: 'std_stage',
-    headerName: 'STAGE',
+    headerName: 'Stage',
     width: 148,
     sortable: false,
     priority: 2,
@@ -132,7 +132,7 @@ export const ALL_COLUMNS: CrmColDef[] = [
   },
   {
     field: 'opp_count',
-    headerName: 'APPS',
+    headerName: 'Program',
     width: 52,
     sortable: true,
     priority: 2,

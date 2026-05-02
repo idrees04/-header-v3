@@ -57,6 +57,13 @@
 :root {
   --radius: 0.625rem;
   --font-primary: 'Inter', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  /* Font weight design tokens */
+  --font-weight-heading: 700;
+  --font-weight-subheading: 600;
+  --font-weight-emphasis: 500;
+  --font-weight-body: 400;
+  --font-weight-label: 500;
+  --font-weight-disabled: 400;
   /* Enterprise blue-slate palette */
   --background: oklch(0.975 0.004 250);
   --foreground: oklch(0 0 0);

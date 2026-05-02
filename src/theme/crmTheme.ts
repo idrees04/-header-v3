@@ -3,13 +3,13 @@ import { createTheme } from '@mui/material/styles';
 export const crmTheme = createTheme({
   palette: {
     mode: 'light',
-    primary:   { main: '#2B7FD4', light: '#EBF4FF', dark: '#1B5EA3' },
+    primary: { main: '#2B7FD4', light: '#EBF4FF', dark: '#1B5EA3' },
     secondary: { main: '#179E6F', light: '#E8F8F2', dark: '#0E6B4A' },
-    error:     { main: '#DC3545', light: '#FEE2E2' },
-    warning:   { main: '#D97706', light: '#FEF3C7' },
-    success:   { main: '#179E6F', light: '#E8F8F2' },
+    error: { main: '#DC3545', light: '#FEE2E2' },
+    warning: { main: '#D97706', light: '#FEF3C7' },
+    success: { main: '#179E6F', light: '#E8F8F2' },
     grey: {
-      50:  '#F9F8F6',
+      50: '#F9F8F6',
       100: '#F2F1EE',
       200: '#ECEAE6',
       300: '#D8D6CF',
@@ -22,12 +22,12 @@ export const crmTheme = createTheme({
     },
     background: {
       default: '#F9F8F6',
-      paper:   '#FFFFFF',
+      paper: '#FFFFFF',
     },
     text: {
-      primary:   '#18181A',
+      primary: '#18181A',
       secondary: '#5C5B57',
-      disabled:  '#9B9992',
+      disabled: '#9B9992',
     },
     divider: 'rgba(0,0,0,0.08)',
   },
@@ -105,7 +105,7 @@ export const crmTheme = createTheme({
       styleOverrides: {
         root: {
           fontFamily: 'var(--font-primary)',
-          fontSize: '0.625rem',
+          fontSize: '0.75rem',
           fontWeight: 500,
           height: '20px',
           borderRadius: '20px',
@@ -117,7 +117,7 @@ export const crmTheme = createTheme({
       styleOverrides: {
         tooltip: {
           fontFamily: 'var(--font-primary)',
-          fontSize: '0.6875rem',
+          fontSize: '0.75rem',
           background: '#18181A',
           borderRadius: '5px',
           padding: '5px 9px',
@@ -143,10 +143,11 @@ export const crmTheme = createTheme({
       styleOverrides: {
         badge: {
           fontFamily: 'var(--font-primary)',
-          fontSize: '0.625rem',
+          fontSize: '0.75rem',
           fontWeight: 700,
         },
       },
     },
   },
 });
+

@@ -110,7 +110,16 @@ export const GridToolbarComposite: React.FC = () => {
                   color: '#000000',
                   padding: '3px 8px',
                   borderRadius: '5px',
+                  transition: 'background-color 0.2s ease',
                   '&:hover': { background: '#F2F1EE' },
+                },
+              },
+              popper: {
+                sx: {
+                  '& .MuiMenuItem-root': {
+                    fontSize: '0.875rem',
+                    fontFamily: 'var(--font-body)',
+                  },
                 },
               },
             }}
@@ -127,6 +136,7 @@ export const GridToolbarComposite: React.FC = () => {
                   color: '#000000',
                   padding: '3px 8px',
                   borderRadius: '5px',
+                  transition: 'background-color 0.2s ease',
                   '&:hover': { background: '#F2F1EE' },
                 },
               },
@@ -140,7 +150,7 @@ export const GridToolbarComposite: React.FC = () => {
         {/* Expand / Collapse */}
         <motion.div whileTap={{ scale: 0.94 }}>
           <Button
-            className="rounded-full flex items-center gap-1.5 text-black"
+            className="flex items-center gap-1.5 text-black text-[0.875rem] px-2 py-[3px] rounded-[5px] hover:bg-[#F2F1EE]"
             variant="ghost"
             size="sm"
             onClick={toggleExpandAll}

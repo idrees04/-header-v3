@@ -29,6 +29,8 @@ const ROW_SX = {
   '&.std-group-row': {
     background: 'var(--crm-row-std-bg, #FFFFFF)',
     fontWeight: 500,
+    transition: 'background-color 0.2s ease, box-shadow 0.2s ease',
+    boxShadow: 'none',
   },
 
   // Student row — expanded / active (cyan highlight)
@@ -47,6 +49,7 @@ const ROW_SX = {
     background: '#EFF0EE',
     zIndex: 1,
     position: 'relative',
+    boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
   },
 
   // Pinned cell hover sync
@@ -74,8 +77,8 @@ const HEADER_SX = {
   },
   '& .MuiDataGrid-columnHeaderTitle': {
     color: '#000000 !important',
-    fontSize: '0.625rem !important',
-    fontWeight: '700 !important',
+    fontSize: '0.875rem !important',
+    fontWeight: '600 !important',
     textTransform: 'uppercase',
     letterSpacing: '0.5px',
   },
@@ -131,8 +134,8 @@ export const CrmDataGrid: React.FC = () => {
         std_gender: 50,
         std_nationality: 85,
         roles_avatars: 150,
-        std_date_entered: 90,
-        std_stage: 130,
+        std_date_entered: 110,
+        std_stage: 150,
         opp_count: 75,
       },
     });

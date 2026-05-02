@@ -88,7 +88,7 @@ export const GenderCell = React.memo((params: GridRenderCellParams<GridRow>) => 
       }}
     >
       <span
-        className={`${g === 'female' ? 'text-[#C2507A]' : g === 'male' ? 'text-[#2B7FD4]' : 'text-black'}`}
+        className={`${g === 'female' ? 'text-[#C2507A]' : g === 'male' ? 'text-[#2B7FD4]' : 'text-black'}  text-[0.875rem]`}
       >
         {g === 'male' ? '♂' : g === 'female' ? '♀' : '—'}
       </span>
@@ -151,18 +151,18 @@ NatCell.displayName = 'NatCell';
 // ── Student Stage badge ────────────────────────────────────
 export const StudentStageCell = React.memo((params: GridRenderCellParams<GridRow>) => {
   const row = params.row as GridRow;
-  if (!row.std_stage) return <span className="text-black text-[0.625rem]">—</span>;
+  if (!row.std_stage) return <span className="text-black text-[0.875rem]">—</span>;
   const cfg = getStudentStageConfig(row.std_stage);
   return (
     <Badge variant={cfg.variant} size="sm" dot dotColor={cfg.dot} className="max-w-full">
-      <span className="truncate">{cfg.label}</span>
+      <span className="truncate text-[0.875rem]">{cfg.label}</span>
     </Badge>
   );
 });
 StudentStageCell.displayName = 'StudentStageCell';
 export const StudentSubAgent = React.memo((params: GridRenderCellParams<GridRow>) => {
   const row = params.row as GridRow;
-  if (!row.std_subagent) return <span className="text-black text-[0.625rem]">—</span>;
+  if (!row.std_subagent) return <span className="text-black text-[0.875rem]">—</span>;
   const cfg = getStudentStageConfig(row.std_subagent);
   return (
     <TooltipCell
@@ -183,7 +183,7 @@ export const OppCountCell = React.memo((params: GridRenderCellParams<GridRow>) =
     <span
       className="inline-flex items-center justify-center font-bold font-mono rounded-[4px] border"
       style={{
-        fontSize: '0.6875rem',
+        fontSize: '0.875rem',
         color,
         borderColor: color + '44',
         minWidth: 22,
@@ -203,9 +203,9 @@ export const DateCell = React.memo(
     const row = params.row as GridRow;
     const val = row[params.field] as string | undefined;
     if (!val || val === '—')
-      return <span className="text-black text-[0.625rem]">—</span>;
+      return <span className="text-black text-[0.875rem]">—</span>;
     return (
-      <span className="font-mono text-[0.625rem] text-black whitespace-nowrap">{val}</span>
+      <span className="font-mono text-[0.875rem] text-black whitespace-nowrap">{val}</span>
     );
   }
 );

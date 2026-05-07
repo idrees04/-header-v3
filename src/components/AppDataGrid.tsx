@@ -13,7 +13,7 @@ import {
 } from '@mui/x-data-grid-pro';
 import { Tooltip } from '@mui/material';
 import { Database, SearchX } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/cn';
 
 type AppDataGridProps<R extends GridValidRowModel> = {
   rows: readonly R[];

@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Tooltip, Avatar, AvatarGroup } from '@mui/material';
 import type { Student, Opportunity } from '@/types';
 import { Badge } from '@/components/ui/Badgecopy';
 import { getLevelConfig, getOppStageConfig } from '@/lib/stageConfig';
+import { useScaling } from '@/hooks/useScaling';
+import { useGridWidthSync, type ColumnWidthInfo, mapColumnWidths } from '@/hooks/useGridWidthSync';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Helpers
@@ -11,15 +13,16 @@ import { getLevelConfig, getOppStageConfig } from '@/lib/stageConfig';
 const dash = (v?: string | null) =>
   !v || v.trim() === '' || v === '—' || v.toLowerCase() === 'n/a' ? '—' : v;
 
-// ✅ FIX: added className support
+// ✅ FIX: added className support and scaling
 const TooltipText: React.FC<{
   value?: string | null;
   className?: string;
 }> = ({ value, className = '' }) => {
+  const { font } = useScaling();
   const text = dash(value);
 
   if (text === '—') {
-    return <span className="text-black text-[0.75rem]">—</span>;
+    return <span className="text-black" style={{ fontSize: font(0.75) }}>—</span>;
   }
 
   return (
@@ -31,13 +34,14 @@ const TooltipText: React.FC<{
           sx: {
             bgcolor: '#1f2937',
             color: '#f9fafb',
-            fontSize: '0.7rem',
+            fontSize: font(0.7),
           },
         },
       }}
     >
       <span
-        className={`block overflow-hidden text-ellipsis whitespace-nowrap max-w-full text-[0.875rem] text-black ${className}`}
+        className={`block overflow-hidden text-ellipsis whitespace-nowrap max-w-full text-black ${className}`}
+        style={{ fontSize: font(0.875) }}
       >
         {text}
       </span>
@@ -70,6 +74,7 @@ const makeInitials = (name: string) =>
     .toUpperCase();
 
 const OppTeamAvatars: React.FC<{ opp: Opportunity }> = ({ opp }) => {
+  const { sc, font } = useScaling();
   const roles: any[] = [];
 
   if (isValidVal(opp.opp_adm_officer)) {
@@ -96,20 +101,22 @@ const OppTeamAvatars: React.FC<{ opp: Opportunity }> = ({ opp }) => {
     });
   }
 
-  if (!roles.length) return <span className="text-[0.75rem]">—</span>;
+  if (!roles.length) return <span style={{ fontSize: font(0.75) }}>—</span>;
 
   return (
     <div className="flex items-center justify-center">
-      <AvatarGroup max={3} spacing={2}>
+      <AvatarGroup max={3} spacing={sc(2)}>
         {roles.map((role, idx) => (
           <Tooltip key={idx} title={role.tooltip} arrow>
             <Avatar
               sx={{
-                width: 24,
-                height: 24,
-                fontSize: '0.68rem',
+                width: sc(24),
+                height: sc(24),
+                // ✅ FIX: Ensure font size scales but doesn't cause overflow
+                fontSize: font(0.65),
                 fontWeight: 600,
                 bgcolor: OPP_AVATAR_COLORS[role.type as AvatarType],
+                border: 'none !important',
               }}
             >
               {makeInitials(role.name)}
@@ -126,26 +133,53 @@ const OppTeamAvatars: React.FC<{ opp: Opportunity }> = ({ opp }) => {
 // ─────────────────────────────────────────────────────────────────────────────
 
 const LevelBadge = ({ level }: { level?: string | null }) => {
+  const { font } = useScaling();
   const cfg = getLevelConfig(level ?? null);
 
-  if (!cfg) return <span className="text-[0.875rem]">—</span>;
+  if (!cfg) return <span style={{ fontSize: font(0.875) }}>—</span>;
+
+  const tooltipTitle =
+    level === 'UG'
+      ? 'Undergraduate'
+      : level === 'PG'
+        ? 'Postgraduate'
+        : level === 'LNG'
+          ? 'Language Course'
+          : level || '';
 
   return (
     <div className="text-left">
-      <Badge variant={cfg.variant} size="sm">
-        <span className="text-[0.875rem]">{cfg.label}</span>
-      </Badge>
+      <Tooltip
+        title={tooltipTitle}
+        arrow
+        slotProps={{
+          tooltip: {
+            sx: {
+              bgcolor: '#1f2937',
+              color: '#f9fafb',
+              fontSize: font(0.7),
+            },
+          },
+        }}
+      >
+        <div className="inline-block">
+          <Badge variant={cfg.variant} size="sm">
+            <span style={{ fontSize: font(0.875) }}>{cfg.label}</span>
+          </Badge>
+        </div>
+      </Tooltip>
     </div>
   );
 };
 
 const StageBadge = ({ stage }: { stage?: string | null }) => {
+  const { font } = useScaling();
   const cfg = getOppStageConfig(stage ?? null);
 
   return (
     <div className="text-left">
       <Badge variant={cfg.variant} size="sm">
-        <span className="text-[0.875rem]">{cfg.label}</span>
+        <span style={{ fontSize: font(0.875) }}>{cfg.label}</span>
       </Badge>
     </div>
   );
@@ -172,11 +206,20 @@ const OPP_COLUMNS = [
 // Cell Renderer
 // ─────────────────────────────────────────────────────────────────────────────
 
-const renderCell = (key: string, opp: Opportunity, index: number) => {
-  switch (key) {
+const RenderCell: React.FC<{
+  columnKey: string;
+  opp: Opportunity;
+  index: number;
+}> = ({ columnKey, opp, index }) => {
+  const { sc, font } = useScaling();
+
+  switch (columnKey) {
     case 'index':
       return (
-        <span className="inline-flex items-center justify-center font-mono font-bold bg-[#ECEAE5] px-1 min-w-[20px] h-[18px] rounded">
+        <span
+          className="inline-flex items-center justify-center font-mono font-bold bg-[#ECEAE5] px-1 rounded"
+          style={{ minWidth: sc(20), height: sc(18), fontSize: font(0.75) }}
+        >
           {index + 1}
         </span>
       );
@@ -194,13 +237,13 @@ const renderCell = (key: string, opp: Opportunity, index: number) => {
       return <StageBadge stage={opp.opp_salaes_stage} />;
 
     case 'opp_commence_date':
-      return <span className="text-[0.875rem]">{dash(opp.opp_commence_date)}</span>;
+      return <span style={{ fontSize: font(0.875) }}>{dash(opp.opp_commence_date)}</span>;
 
     case 'opp_last_stage_change_date':
-      return <span className="text-[0.875rem]">{dash(opp.opp_last_stage_change_date)}</span>;
+      return <span style={{ fontSize: font(0.875) }}>{dash(opp.opp_last_stage_change_date)}</span>;
 
     case 'opp_date_entered':
-      return <span className="text-[0.875rem]">{dash(opp.opp_date_entered)}</span>;
+      return <span style={{ fontSize: font(0.875) }}>{dash(opp.opp_date_entered)}</span>;
 
     case 'opp_team':
       return <OppTeamAvatars opp={opp} />;
@@ -209,72 +252,167 @@ const renderCell = (key: string, opp: Opportunity, index: number) => {
       return <TooltipText value={opp.opp_subagent} />;
 
     default:
-      return <span>—</span>;
+      return <span style={{ fontSize: font(0.875) }}>—</span>;
   }
-};
+}
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Row
 // ─────────────────────────────────────────────────────────────────────────────
 
-const OppRow: React.FC<{ opp: Opportunity; index: number }> = ({ opp, index }) => {
+interface OppRowProps {
+  opp: Opportunity;
+  index: number;
+  columnWidths?: Record<string, number>;
+}
+
+const OppRow: React.FC<OppRowProps> = ({ opp, index, columnWidths = {} }) => {
+  const { sc, font } = useScaling();
   const isEven = index % 2 === 0;
 
   return (
     <tr
       style={{
         backgroundColor: isEven ? '#FFFFFF' : '#F5F4F1',
-        height: 28,
+        height: sc(28),
       }}
     >
-      {OPP_COLUMNS.map((col) => (
-        <td
-          key={col.key}
-          className={`px-2 py-0 align-middle text-[0.875rem] ${col.align === 'center' ? 'text-center' : 'text-left'
-            }`}
-        >
-          {renderCell(col.key, opp, index)}
-        </td>
-      ))}
+      {OPP_COLUMNS.map((col) => {
+        const width = columnWidths[col.key] || 120;
+        return (
+          <td
+            key={col.key}
+            className={`px-2 py-0 align-middle ${col.align === 'center' ? 'text-center' : 'text-left'}`}
+            style={{
+              fontSize: font(0.875),
+              width: `${width}px`,
+              minWidth: `${Math.max(width * 0.8, 80)}px`,
+              maxWidth: `${width * 1.5}px`,
+              overflow: 'hidden',
+              textOverflow: 'ellipsis'
+            }}
+          >
+            <RenderCell columnKey={col.key} opp={opp} index={index} />
+          </td>
+        );
+      })}
     </tr>
   );
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Column Mapping Configuration
+// ─────────────────────────────────────────────────────────────────────────────
+
+/**
+ * Maps parent grid columns to child table columns for width synchronization
+ * This ensures the child table columns align with the parent grid's visual structure
+ */
+const COLUMN_MAPPING: Record<string, string[]> = {
+  'index': ['__detail_panel_toggle__'], // Toggle column width
+  'opp_name': ['std_name'], // Student name column width
+  'opp_institute_name': ['std_institute'], // Institute column width
+  'opp_course_level': ['std_course_level'], // Course level column width
+  'opp_salaes_stage': ['std_stage'], // Stage column width
+  'opp_commence_date': ['std_commence_date'], // Commence date column width
+  'opp_last_stage_change_date': ['std_last_stage_change_date'], // Last change column width
+  'opp_date_entered': ['std_date_entered'], // Date entered column width
+  'opp_team': ['std_team'], // Team column width
+  'opp_subagent': ['std_subagent'], // Sub-agent column width
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Main Component
 // ─────────────────────────────────────────────────────────────────────────────
 
-export const OppDetailPanel: React.FC<{ student: Student }> = ({ student }) => {
+export interface OppDetailPanelProps {
+  student: Student;
+  parentColumnWidths?: ColumnWidthInfo[];
+  containerRef?: React.RefObject<HTMLElement | null>;
+}
+
+export const OppDetailPanel: React.FC<OppDetailPanelProps> = ({
+  student,
+  parentColumnWidths = [],
+  containerRef
+}) => {
+  const { sc, font } = useScaling();
   const opps = student.opportunities.filter((o) => o.opp_id);
+  const tableContainerRef = useRef<HTMLDivElement>(null);
+
+  // Use width synchronization hook
+  const { columnWidths: synchronizedWidths, totalWidth } = useGridWidthSync({
+    containerRef: containerRef || tableContainerRef,
+    columns: parentColumnWidths.length > 0
+      ? mapColumnWidths(parentColumnWidths, COLUMN_MAPPING)
+      : OPP_COLUMNS.map(col => ({
+        field: col.key,
+        width: 120, // Default width if no parent widths provided
+        minWidth: 80,
+      })),
+    debounceMs: 50, // Faster response for smoother UX
+  });
+
+  // Create a map of column widths for easy lookup
+  const columnWidthMap = synchronizedWidths.reduce((acc, col) => {
+    acc[col.field] = col.width;
+    return acc;
+  }, {} as Record<string, number>);
 
   if (!opps.length) {
     return (
       <div className="py-3 text-center bg-[#F5F4F1] border-t">
-        <span className="text-[0.75rem] italic">No application records found.</span>
+        <span className="italic" style={{ fontSize: font(0.75) }}>No application records found.</span>
       </div>
     );
   }
 
   return (
-    <div className="bg-[#FAFAF8] border-t overflow-x-auto">
-      <table className="w-full border-collapse">
+    <div
+      ref={tableContainerRef}
+      className="bg-[#FAFAF8] border-t overflow-auto scrollbar-thin scrollbar-thumb-gray-300"
+      style={{ maxHeight: sc(500) }}
+    >
+      <table
+        className="border-collapse"
+        style={{
+          width: totalWidth > 0 ? `${totalWidth}px` : '100%',
+          minWidth: '100%',
+          tableLayout: 'fixed' // Ensures consistent column widths
+        }}
+      >
         <thead>
-          <tr className="bg-[#F0EFEB] border-b h-[26px]">
-            {OPP_COLUMNS.map((col) => (
-              <th
-                key={col.key}
-                className={`px-2 text-[0.875rem] font-semibold uppercase text-black whitespace-nowrap ${col.align === 'center' ? 'text-center' : 'text-left'
-                  }`}
-              >
-                {col.label}
-              </th>
-            ))}
+          <tr className="bg-[#F0EFEB] border-b sticky top-0 z-10" style={{ height: sc(26) }}>
+            {OPP_COLUMNS.map((col) => {
+              const width = columnWidthMap[col.key] || 120;
+              return (
+                <th
+                  key={col.key}
+                  className={`px-2 font-bold uppercase text-black whitespace-nowrap ${col.align === 'center' ? 'text-center' : 'text-left'}`}
+                  style={{
+                    fontSize: font(0.875),
+                    width: `${width}px`,
+                    minWidth: `${Math.max(width * 0.8, 80)}px`,
+                    maxWidth: `${width * 1.5}px`,
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis'
+                  }}
+                >
+                  {col.label}
+                </th>
+              );
+            })}
           </tr>
         </thead>
 
         <tbody>
           {opps.map((opp, i) => (
-            <OppRow key={opp.opp_id ?? i} opp={opp} index={i} />
+            <OppRow
+              key={opp.opp_id ?? i}
+              opp={opp}
+              index={i}
+              columnWidths={columnWidthMap}
+            />
           ))}
         </tbody>
       </table>

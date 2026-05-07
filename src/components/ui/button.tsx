@@ -7,20 +7,21 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default:  'bg-[#18181A] text-white hover:bg-[#2d2d30] border border-transparent',
-        outline:  'bg-white border border-[rgba(0,0,0,0.12)] text-[#5C5B57] hover:bg-[#F2F1EE] hover:text-[#18181A]',
-        ghost:    'bg-transparent border border-transparent text-[#5C5B57] hover:bg-[#F2F1EE] hover:text-[#18181A]',
-        active:   'bg-[#18181A] text-white border border-[#18181A]',
-        filter:   'bg-white border border-[rgba(0,0,0,0.10)] text-[#5C5B57] hover:bg-[#F2F1EE] hover:border-[rgba(0,0,0,0.18)]',
+        default: 'bg-[#18181A] text-white hover:bg-[#2d2d30] border border-transparent',
+        outline: 'bg-white border border-[rgba(0,0,0,0.12)] text-[#5C5B57] hover:bg-[#F2F1EE] hover:text-[#18181A]',
+        ghost: 'bg-transparent border border-transparent text-[#5C5B57] hover:bg-[#F2F1EE] hover:text-[#18181A]',
+        active: 'bg-[#18181A] text-white border border-[#18181A]',
+        filter: 'bg-white border border-[rgba(0,0,0,0.10)] text-[#5C5B57] hover:bg-[#F2F1EE] hover:border-[rgba(0,0,0,0.18)]',
         filterOn: 'bg-[#18181A] text-white border border-[#18181A]',
       },
       size: {
-        xs:  'h-6 px-2 py-0 text-[10px]',
-        sm:  'h-7 px-2.5 py-0 text-[11px]',
-        md:  'h-8 px-3 py-0 text-[11.5px]',
-        lg:  'h-9 px-4 py-0 text-[12px]',
-        icon:'h-7 w-7 p-0',
-      },
+        xs: 'h-6 px-2 py-0 text-[0.6875rem]',   // 11px
+        sm: 'h-7 px-2.5 py-0 text-[0.75rem]',   // 12px
+        md: 'h-8 px-3 py-0 text-[0.8125rem]',   // 13px
+        lg: 'h-9 px-4 py-0 text-[0.875rem]',    // 14px (your base)
+        xl: 'h-10 px-5 py-0 text-[0.9375rem]',  // 15px (optional, for dense desktop UI)
+        icon: 'h-7 w-7 p-0',
+      }
     },
     defaultVariants: {
       variant: 'outline',
@@ -31,7 +32,7 @@ const buttonVariants = cva(
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
+  VariantProps<typeof buttonVariants> {
   asChild?: boolean;
 }
 

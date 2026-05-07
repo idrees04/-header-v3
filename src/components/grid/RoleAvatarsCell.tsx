@@ -2,6 +2,7 @@ import React from 'react';
 import { Tooltip, Avatar, AvatarGroup } from '@mui/material';
 import type { GridRenderCellParams } from '@mui/x-data-grid-pro';
 import { GridRow } from '@/lib/gridRows';
+import { useScaling } from '@/hooks/useScaling';
 
 interface RoleInfo {
     name: string;
@@ -40,6 +41,7 @@ const getAvatarStyle = (type: RoleInfo['type']) => {
 
 export const RoleAvatarsCell = React.memo(
     (params: GridRenderCellParams<GridRow>) => {
+        const { sc, font } = useScaling();
         const row = params.row as GridRow;
 
         const roles: RoleInfo[] = [];
@@ -59,7 +61,7 @@ export const RoleAvatarsCell = React.memo(
             }
         };
 
-        // Student-level team roles (opp rows no longer rendered in the grid)
+        // Student-level team roles
         pushRole(
             row.std_adm_officer,
             `Admission Officer: ${row.std_adm_officer}`,
@@ -82,7 +84,7 @@ export const RoleAvatarsCell = React.memo(
         if (roles.length === 0) {
             return (
                 <div className="flex justify-center">
-                    <span className="text-[#D0CEC7] text-[10px]">—</span>
+                    <span className="text-[#D0CEC7]" style={{ fontSize: font(0.625) }}>—</span>
                 </div>
             );
         }
@@ -91,10 +93,10 @@ export const RoleAvatarsCell = React.memo(
             <div className="flex justify-center">
                 <AvatarGroup
                     max={3}
-                    spacing={2}
+                    spacing={sc(2)}
                     sx={{
                         '& .MuiAvatarGroup-avatar': {
-                            border: 'none',
+                            border: 'none !important',
                         },
                         '& .MuiAvatar-root': {
                             transition: 'transform 0.15s ease',
@@ -112,20 +114,22 @@ export const RoleAvatarsCell = React.memo(
                             arrow
                             slotProps={{
                                 tooltip: {
-                                    sx: { bgcolor: '#1f2937', color: '#f9fafb', fontSize: '0.75rem' },
+                                    sx: { bgcolor: '#1f2937', color: '#f9fafb', fontSize: font(0.75) },
                                 },
                             }}
                         >
                             <Avatar
                                 sx={{
-                                    width: 24,
-                                    height: 24,
-                                    fontSize: '0.7rem',
-                                    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                                    width: sc(24),
+                                    height: sc(24),
+                                    // ✅ FIX: scale font size but prevent overflow
+                                    fontSize: font(0.65), 
+                                    boxShadow: `0 ${sc(2)}px ${sc(4)}px rgba(0,0,0,0.1)`,
                                     ...getAvatarStyle(role.type),
+                                    border: 'none !important',
                                 }}
                             >
-                                {/* ✅ Better initials (max 2 chars) */}
+                                {/* ✅ Initials (max 2 chars) */}
                                 {role.name
                                     .split(' ')
                                     .map((n) => n[0])

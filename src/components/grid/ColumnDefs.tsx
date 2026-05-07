@@ -12,6 +12,7 @@ import {
   EmailCell,
   PassportCell,
   StudentSubAgent,
+  EnrolledCell,
 } from './CellRenderers';
 import { RoleAvatarsCell } from './RoleAvatarsCell';
 
@@ -31,8 +32,8 @@ export const ALL_COLUMNS: CrmColDef[] = [
   {
     field: 'std_name',
     headerName: 'Student',
-    width: 220,
-    minWidth: 180,
+    flex: 2.8,
+    minWidth: 220,
     sortable: true,
     pinnable: true,
     priority: 1,
@@ -50,7 +51,8 @@ export const ALL_COLUMNS: CrmColDef[] = [
   {
     field: 'std_nationality',
     headerName: 'Nationality',
-    width: 75,
+    flex: 0.9,
+    minWidth: 85,
     sortable: true,
     priority: 3,
     renderCell: (p: GridRenderCellParams<GridRow>) => <NatCell {...p} />,
@@ -58,7 +60,8 @@ export const ALL_COLUMNS: CrmColDef[] = [
   {
     field: 'std_gender',
     headerName: 'Gender',
-    width: 36,
+    flex: 0.5,
+    minWidth: 50,
     sortable: false,
     priority: 4,
     align: 'center',
@@ -73,34 +76,38 @@ export const ALL_COLUMNS: CrmColDef[] = [
   //   priority: 4,
   //   renderCell: (p: GridRenderCellParams<GridRow>) => <DateCell {...p} field="std_dob" />,
   // },
-  // {
-  //   field: 'std_phone_mobile',
-  //   headerName: 'PHONE',
-  //   width: 110,
-  //   sortable: false,
-  //   priority: 4,
-  //   renderCell: (p: GridRenderCellParams<GridRow>) => <PhoneCell {...p} />,
-  // },
+  {
+    field: 'std_phone_mobile',
+    headerName: 'Phone',
+    flex: 1.5,
+    minWidth: 140,
+    sortable: false,
+    priority: 4,
+    renderCell: (p: GridRenderCellParams<GridRow>) => <PhoneCell {...p} />,
+  },
   {
     field: 'std_email',
     headerName: 'Email',
-    width: 160,
+    flex: 2.2,
+    minWidth: 180,
     sortable: false,
     priority: 4,
     renderCell: (p: GridRenderCellParams<GridRow>) => <EmailCell {...p} />,
   },
-  //   {
-  //   field: 'std_passport',
-  //   headerName: 'PASSPORT',
-  //   width: 100,
-  //   sortable: false,
-  //   priority: 4,
-  //   renderCell: (p: GridRenderCellParams<GridRow>) => <PassportCell {...p} />,
-  // },
+  {
+    field: 'std_passport',
+    headerName: 'Passport',
+    flex: 1.1,
+    minWidth: 110,
+    sortable: false,
+    priority: 4,
+    renderCell: (p: GridRenderCellParams<GridRow>) => <PassportCell {...p} />,
+  },
   {
     field: 'roles_avatars',
-    headerName: 'Student Office',
-    width: 160,
+    headerName: 'Student Info.',
+    flex: 1.6,
+    minWidth: 150,
     sortable: false,
     priority: 2,
     align: 'center',
@@ -110,22 +117,17 @@ export const ALL_COLUMNS: CrmColDef[] = [
   {
     field: 'std_date_entered',
     headerName: 'Enrolled',
-    width: 90,
+    flex: 1.0,
+    minWidth: 100,
     sortable: true,
     priority: 3,
-    renderCell: (p: GridRenderCellParams<GridRow>) => {
-      const row = p.row as GridRow;
-      return (
-        <span className="text-[0.875rem] text-black whitespace-nowrap">
-          {row.std_date_entered || '—'}
-        </span>
-      );
-    },
+    renderCell: (p: GridRenderCellParams<GridRow>) => <EnrolledCell {...p} />,
   },
   {
     field: 'std_stage',
     headerName: 'Stage',
-    width: 148,
+    flex: 2.0,
+    minWidth: 200,
     sortable: false,
     priority: 2,
     renderCell: (p: GridRenderCellParams<GridRow>) => <StudentStageCell {...p} />,
@@ -133,7 +135,8 @@ export const ALL_COLUMNS: CrmColDef[] = [
   {
     field: 'opp_count',
     headerName: 'Program',
-    width: 52,
+    flex: 0.7,
+    minWidth: 60,
     sortable: true,
     priority: 2,
     align: 'center',
@@ -143,7 +146,8 @@ export const ALL_COLUMNS: CrmColDef[] = [
   {
     field: 'std_subagent',
     headerName: 'Sub-Agent',
-    width: 90,
+    flex: 1.3,
+    minWidth: 140,
     sortable: true,
     priority: 2,
     align: 'center',

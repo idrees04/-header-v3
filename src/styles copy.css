@@ -1,0 +1,416 @@
+/* ============================================================
+   NEXUSOS ENTERPRISE THEME — ULTIMATE EDITION
+   Deep Amethyst / Electric Cyan / Royal Gold / Dark Glassmorphism
+   “Love at first sight — Retention Engineered”
+   Version: 10.0 | Quality: 10/10
+   ============================================================ */
+
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ============================================================
+   GLOBAL SMOOTHNESS & PERFORMANCE
+   ============================================================ */
+* {
+  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
+  border-color: var(--border);
+}
+
+::selection {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--muted);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+  border-radius: var(--radius-md);
+}
+
+/* ============================================================
+   LIGHT MODE — “Crystal Radiance”
+   ============================================================ */
+:root {
+  /* Base Radius — softer, friendlier */
+  --radius: 16px;
+  --radius-sm:  8px;
+  --radius-md:  12px;
+  --radius-lg:  16px;
+  --radius-xl:  24px;
+  --radius-2xl: 32px;
+  --radius-3xl: 40px;
+  --radius-4xl: 48px;
+  --radius-full: 9999px;
+
+  /* Core surfaces — fresh, airy, premium */
+  --background:              #fbfaff;
+  --foreground:              #110f2b;
+
+  /* Glassmorphism base (light) */
+  --glass-bg:                rgba(255, 255, 255, 0.68);
+  --glass-border:            rgba(139, 92, 246, 0.18);
+  --glass-shadow:            0 8px 32px rgba(99, 102, 241, 0.08);
+
+  /* Cards & Popovers — elevated + soft */
+  --card:                    rgba(255, 255, 255, 0.96);
+  --card-foreground:         #110f2b;
+  --popover:                 rgba(255, 255, 255, 0.98);
+  --popover-foreground:      #110f2b;
+
+  /* Primary — Electric Amethyst */
+  --primary:                 #8b5cf6;
+  --primary-foreground:      #ffffff;
+  --primary-glow:            0 0 12px rgba(139, 92, 246, 0.5);
+
+  /* Secondary — Soft Lavender */
+  --secondary:               #f0e9ff;
+  --secondary-foreground:    #6d28d9;
+
+  /* Muted — tranquil */
+  --muted:                   #f3f0ff;
+  --muted-foreground:        #6b5b9e;
+
+  /* Accent — Royal Gold + warmth */
+  --accent:                  #fbbf24;
+  --accent-foreground:       #78350f;
+  --accent-glow:             0 0 10px rgba(251, 191, 36, 0.4);
+
+  /* Cyan highlight — fresh energy */
+  --highlight:               #06b6d4;
+  --highlight-foreground:    #ffffff;
+  --highlight-glow:          0 0 12px rgba(6, 182, 212, 0.4);
+
+  /* Destructive — elegant but clear */
+  --destructive:             #f43f5e;
+  --destructive-foreground:  #ffffff;
+
+  /* Utility — premium borders & rings */
+  --border:                  rgba(139, 92, 246, 0.12);
+  --input:                   rgba(139, 92, 246, 0.06);
+  --ring:                    #a78bfa;
+  --ring-offset-background:  var(--background);
+
+  /* Charts — vibrant & joyful */
+  --chart-1:                 #8b5cf6;
+  --chart-2:                 #fbbf24;
+  --chart-3:                 #06b6d4;
+  --chart-4:                 #ec4899;
+  --chart-5:                 #10b981;
+
+  /* Sidebar — deep but welcoming */
+  --sidebar-bg:              #1e1a3a;
+  --sidebar-fg:              #e2e2ff;
+  --sidebar-active:          rgba(139, 92, 246, 0.28);
+  --sidebar-active-fg:       #ffffff;
+  --sidebar-hover:           rgba(139, 92, 246, 0.12);
+  --sidebar-section:         rgba(255, 255, 255, 0.2);
+  --sidebar-border:          rgba(139, 92, 246, 0.2);
+
+  /* Header — blur glassmorphism */
+  --header-bg:               rgba(255, 255, 255, 0.72);
+  --header-fg:               #110f2b;
+  --header-border:           rgba(139, 92, 246, 0.16);
+
+  /* Login page — dreamy aurora */
+  --login-bg:                linear-gradient(135deg, #f5f3ff 0%, #ede9fe 50%, #fce7f3 100%);
+  --login-card:              rgba(255, 255, 255, 0.9);
+  --login-card-border:       rgba(139, 92, 246, 0.25);
+  --login-input-bg:          rgba(255, 255, 255, 0.85);
+  --login-input-border:      rgba(139, 92, 246, 0.3);
+  --login-label:             #4c1d95;
+  --login-title:             #2e1065;
+  --login-btn-bg:            #8b5cf6;
+  --login-btn-hover:         #a78bfa;
+  --login-link:              #7c3aed;
+
+  /* Shadows — buttery soft + depth */
+  --shadow-sm:               0 2px 8px rgba(0, 0, 0, 0.03), 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow:                  0 8px 28px rgba(99, 102, 241, 0.08), 0 2px 4px rgba(0, 0, 0, 0.02);
+  --shadow-lg:               0 20px 40px rgba(99, 102, 241, 0.12), 0 8px 16px rgba(0, 0, 0, 0.04);
+  --shadow-card:             0 12px 30px rgba(99, 102, 241, 0.06);
+}
+
+/* ============================================================
+   DARK MODE — “Midnight Nebula”
+   ============================================================ */
+.dark {
+  /* Core surfaces — deep cosmic */
+  --background:              #05030f;
+  --foreground:              #f0f2ff;
+
+  /* Glassmorphism dark */
+  --glass-bg:                rgba(10, 8, 25, 0.68);
+  --glass-border:            rgba(139, 92, 246, 0.3);
+  --glass-shadow:            0 8px 32px rgba(0, 0, 0, 0.4);
+
+  /* Cards & Popovers — elevated dark glass */
+  --card:                    rgba(18, 14, 38, 0.92);
+  --card-foreground:         #f0f2ff;
+  --popover:                 rgba(14, 10, 34, 0.96);
+  --popover-foreground:      #f0f2ff;
+
+  /* Primary — Glowing Amethyst */
+  --primary:                 #a78bfa;
+  --primary-foreground:      #ffffff;
+  --primary-glow:            0 0 20px rgba(139, 92, 246, 0.7);
+
+  /* Secondary — deep violet */
+  --secondary:               rgba(139, 92, 246, 0.18);
+  --secondary-foreground:    #c4b5fd;
+
+  /* Muted — calm deep */
+  --muted:                   rgba(139, 92, 246, 0.08);
+  --muted-foreground:        #a78bfa;
+
+  /* Accent — molten gold */
+  --accent:                  #fcd34d;
+  --accent-foreground:       #2d1b00;
+  --accent-glow:             0 0 18px rgba(252, 211, 77, 0.6);
+
+  /* Cyan highlight — neon pulse */
+  --highlight:               #22d3ee;
+  --highlight-foreground:    #020617;
+  --highlight-glow:          0 0 18px rgba(34, 211, 238, 0.6);
+
+  /* Destructive — refined */
+  --destructive:             #fb7185;
+  --destructive-foreground:  #2c0b0e;
+
+  /* Utility */
+  --border:                  rgba(139, 92, 246, 0.28);
+  --input:                   rgba(139, 92, 246, 0.12);
+  --ring:                    #c4b5fd;
+  --ring-offset-background:  var(--background);
+
+  /* Charts — neon luxury */
+  --chart-1:                 #a78bfa;
+  --chart-2:                 #fcd34d;
+  --chart-3:                 #22d3ee;
+  --chart-4:                 #f472b6;
+  --chart-5:                 #34d399;
+
+  /* Sidebar — cosmic depth */
+  --sidebar-bg:              #02010a;
+  --sidebar-fg:              #ddd6fe;
+  --sidebar-active:          rgba(139, 92, 246, 0.35);
+  --sidebar-active-fg:       #ffffff;
+  --sidebar-hover:           rgba(139, 92, 246, 0.15);
+  --sidebar-section:         rgba(167, 139, 250, 0.5);
+  --sidebar-border:          rgba(139, 92, 246, 0.25);
+
+  /* Header — dark glass */
+  --header-bg:               rgba(5, 3, 15, 0.85);
+  --header-fg:               #f0f2ff;
+  --header-border:           rgba(139, 92, 246, 0.3);
+
+  /* Login page — galactic aurora */
+  --login-bg:                linear-gradient(135deg, #02010f 0%, #0b0822 50%, #160d30 100%);
+  --login-card:              rgba(18, 14, 48, 0.82);
+  --login-card-border:       rgba(139, 92, 246, 0.45);
+  --login-input-bg:          rgba(30, 25, 70, 0.7);
+  --login-input-border:      rgba(139, 92, 246, 0.5);
+  --login-label:             #c4b5fd;
+  --login-title:             #ede9fe;
+  --login-btn-bg:            #8b5cf6;
+  --login-btn-hover:         #a78bfa;
+  --login-link:              #c4b5fd;
+
+  /* Shadows — deep cinematic */
+  --shadow-sm:               0 2px 8px rgba(0, 0, 0, 0.5);
+  --shadow:                  0 8px 28px rgba(0, 0, 0, 0.6), 0 2px 4px rgba(0, 0, 0, 0.4);
+  --shadow-lg:               0 20px 40px rgba(0, 0, 0, 0.8), 0 8px 16px rgba(0, 0, 0, 0.6);
+  --shadow-card:             0 12px 30px rgba(0, 0, 0, 0.7);
+}
+
+/* ============================================================
+   TAILWIND THEME BRIDGE (Full Spectrum)
+   ============================================================ */
+@theme inline {
+  /* Radius */
+  --radius-sm:   var(--radius-sm);
+  --radius-md:   var(--radius-md);
+  --radius-lg:   var(--radius-lg);
+  --radius-xl:   var(--radius-xl);
+  --radius-2xl:  var(--radius-2xl);
+  --radius-3xl:  var(--radius-3xl);
+  --radius-4xl:  var(--radius-4xl);
+  --radius-full: var(--radius-full);
+
+  /* Core */
+  --color-background:              var(--background);
+  --color-foreground:              var(--foreground);
+  --color-card:                    var(--card);
+  --color-card-foreground:         var(--card-foreground);
+  --color-popover:                 var(--popover);
+  --color-popover-foreground:      var(--popover-foreground);
+  
+  /* Primary / Accent / Highlight */
+  --color-primary:                 var(--primary);
+  --color-primary-foreground:      var(--primary-foreground);
+  --color-secondary:               var(--secondary);
+  --color-secondary-foreground:    var(--secondary-foreground);
+  --color-muted:                   var(--muted);
+  --color-muted-foreground:        var(--muted-foreground);
+  --color-accent:                  var(--accent);
+  --color-accent-foreground:       var(--accent-foreground);
+  --color-highlight:               var(--highlight);
+  --color-highlight-foreground:    var(--highlight-foreground);
+  
+  /* Destructive */
+  --color-destructive:             var(--destructive);
+  --color-destructive-foreground:  var(--destructive-foreground);
+  
+  /* Borders & Inputs */
+  --color-border:                  var(--border);
+  --color-input:                   var(--input);
+  --color-ring:                    var(--ring);
+  --ring-offset-background:        var(--background);
+  
+  /* Charts */
+  --color-chart-1:                 var(--chart-1);
+  --color-chart-2:                 var(--chart-2);
+  --color-chart-3:                 var(--chart-3);
+  --color-chart-4:                 var(--chart-4);
+  --color-chart-5:                 var(--chart-5);
+  
+  /* Sidebar */
+  --color-sidebar-bg:              var(--sidebar-bg);
+  --color-sidebar-fg:              var(--sidebar-fg);
+  --color-sidebar-active:          var(--sidebar-active);
+  --color-sidebar-active-fg:       var(--sidebar-active-fg);
+  --color-sidebar-hover:           var(--sidebar-hover);
+  --color-sidebar-section:         var(--sidebar-section);
+  --color-sidebar-border:          var(--sidebar-border);
+  
+  /* Header */
+  --color-header-bg:               var(--header-bg);
+  --color-header-fg:               var(--header-fg);
+  --color-header-border:           var(--header-border);
+  
+  /* Login / Glass */
+  --color-login-bg:                var(--login-bg);
+  --color-login-card:              var(--login-card);
+  --color-login-card-border:       var(--login-card-border);
+  --color-login-input-bg:          var(--login-input-bg);
+  --color-login-input-border:      var(--login-input-border);
+  --color-login-label:             var(--login-label);
+  --color-login-title:             var(--login-title);
+  --color-login-btn-bg:            var(--login-btn-bg);
+  --color-login-btn-hover:         var(--login-btn-hover);
+  --color-login-link:              var(--login-link);
+  
+  /* Shadows */
+  --shadow-sm:                     var(--shadow-sm);
+  --shadow:                        var(--shadow);
+  --shadow-lg:                     var(--shadow-lg);
+  --shadow-card:                   var(--shadow-card);
+  
+  /* Glow effects */
+  --glow-primary:                  var(--primary-glow);
+  --glow-accent:                   var(--accent-glow);
+  --glow-highlight:                var(--highlight-glow);
+}
+
+/* ============================================================
+   PREMIUM GLOBAL STYLES — Addictive UX
+   ============================================================ */
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-feature-settings: "rlig" 1, "calt" 1, "ss02" 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Glassmorphism utility classes (ready to use) */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+}
+
+.glass-card {
+  background: var(--card);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-card);
+}
+
+/* Animated gradient text for hero sections */
+.gradient-text {
+  background: linear-gradient(135deg, var(--primary), var(--accent), var(--highlight));
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 4s linear infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Hover glow effects for interactive elements */
+.hover-glow-primary:hover {
+  box-shadow: var(--primary-glow);
+  transition: all 0.3s ease;
+}
+
+.hover-glow-accent:hover {
+  box-shadow: var(--accent-glow);
+}
+
+/* Smooth theme transition */
+.theme-transition {
+  transition: background-color 0.3s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.3s ease;
+}
+
+/* Love at first sight — micro interactions */
+button, a, .clickable {
+  transition: all 0.2s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+button:active, .clickable:active {
+  transform: scale(0.97);
+}
+
+/* Custom focus ring that matches brand */
+input:focus, textarea:focus, select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+  outline: none;
+}
+
+/* Scroll reveal smoothness */
+html {
+  scroll-behavior: smooth;
+}

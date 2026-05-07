@@ -98,11 +98,18 @@ export function calculateColumnWidths<T extends Record<string, unknown>>(
         } else if (useFlex) {
             /**
              * ✅ FLEX COLUMNS (AUTO FILL)
+             * Proportional scaling for laptop/desktop screens.
              */
             delete updated.width;
-            updated.flex = flexBase;
+            
+            // Prioritize flex from column definition, fallback to flexBase
+            updated.flex = col.flex ?? flexBase;
+            
+            // Content-driven minWidth prevents collapse
             updated.minWidth = width;
-            updated.maxWidth = globalMax;
+            
+            // Remove maxWidth so columns can utilize full horizontal space on large LCDs
+            delete updated.maxWidth;
             updated.resizable = true;
         } else {
             /**

@@ -11,6 +11,9 @@
   --radius-2xl: calc(var(--radius) + 8px);
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
+  --font-sans: var(--font-primary);
+  --font-mono: var(--font-primary);
+  --font-serif: var(--font-primary);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -53,6 +56,14 @@
 
 :root {
   --radius: 0.625rem;
+  --font-primary: 'Inter', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  /* Font weight design tokens */
+  --font-weight-heading: 700;
+  --font-weight-subheading: 600;
+  --font-weight-emphasis: 500;
+  --font-weight-body: 400;
+  --font-weight-label: 500;
+  --font-weight-disabled: 400;
   /* Enterprise blue-slate palette */
   --background: oklch(0.975 0.004 250);
   --foreground: oklch(0 0 0);
@@ -146,14 +157,31 @@
 }
 
 @layer base {
+  /* :root {
+    font-size: 16px;
+  }
+  
+  @media (min-width: 1920px) {
+    :root {
+      font-size: 18px;
+    }
+  }
+
+  @media (min-width: 2560px) {
+    :root {
+      font-size: 20px;
+    }
+  } */
+
   * {
     border-color: var(--color-border);
+    font-family: var(--font-primary) !important;
   }
 
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-family: var(--font-primary);
   }
 }
 

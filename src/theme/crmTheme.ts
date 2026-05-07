@@ -3,13 +3,13 @@ import { createTheme } from '@mui/material/styles';
 export const crmTheme = createTheme({
   palette: {
     mode: 'light',
-    primary:   { main: '#2B7FD4', light: '#EBF4FF', dark: '#1B5EA3' },
+    primary: { main: '#2B7FD4', light: '#EBF4FF', dark: '#1B5EA3' },
     secondary: { main: '#179E6F', light: '#E8F8F2', dark: '#0E6B4A' },
-    error:     { main: '#DC3545', light: '#FEE2E2' },
-    warning:   { main: '#D97706', light: '#FEF3C7' },
-    success:   { main: '#179E6F', light: '#E8F8F2' },
+    error: { main: '#DC3545', light: '#FEE2E2' },
+    warning: { main: '#D97706', light: '#FEF3C7' },
+    success: { main: '#179E6F', light: '#E8F8F2' },
     grey: {
-      50:  '#F9F8F6',
+      50: '#F9F8F6',
       100: '#F2F1EE',
       200: '#ECEAE6',
       300: '#D8D6CF',
@@ -22,29 +22,29 @@ export const crmTheme = createTheme({
     },
     background: {
       default: '#F9F8F6',
-      paper:   '#FFFFFF',
+      paper: '#FFFFFF',
     },
     text: {
-      primary:   '#18181A',
+      primary: '#18181A',
       secondary: '#5C5B57',
-      disabled:  '#9B9992',
+      disabled: '#9B9992',
     },
     divider: 'rgba(0,0,0,0.08)',
   },
 
   typography: {
-    fontFamily: '"DM Sans", system-ui, sans-serif',
+    fontFamily: 'var(--font-primary)',
     fontSize: 12,
-    h1: { fontFamily: '"Syne", system-ui, sans-serif', fontWeight: 800 },
-    h2: { fontFamily: '"Syne", system-ui, sans-serif', fontWeight: 700 },
-    h3: { fontFamily: '"Syne", system-ui, sans-serif', fontWeight: 700 },
-    h4: { fontFamily: '"Syne", system-ui, sans-serif', fontWeight: 600 },
-    h5: { fontFamily: '"Syne", system-ui, sans-serif', fontWeight: 600 },
-    h6: { fontFamily: '"Syne", system-ui, sans-serif', fontWeight: 600 },
-    caption: { fontSize: '10px', letterSpacing: '0.3px' },
+    h1: { fontFamily: 'var(--font-primary)', fontWeight: 800 },
+    h2: { fontFamily: 'var(--font-primary)', fontWeight: 700 },
+    h3: { fontFamily: 'var(--font-primary)', fontWeight: 700 },
+    h4: { fontFamily: 'var(--font-primary)', fontWeight: 600 },
+    h5: { fontFamily: 'var(--font-primary)', fontWeight: 600 },
+    h6: { fontFamily: 'var(--font-primary)', fontWeight: 600 },
+    caption: { fontSize: '0.625rem', letterSpacing: '0.01875rem' },
     overline: {
-      fontSize: '9.5px',
-      letterSpacing: '0.8px',
+      fontSize: '0.59375rem',
+      letterSpacing: '0.05rem',
       fontWeight: 700,
       textTransform: 'uppercase',
     },
@@ -91,44 +91,44 @@ export const crmTheme = createTheme({
       defaultProps: { disableElevation: true, disableRipple: true },
       styleOverrides: {
         root: {
-          fontFamily: '"DM Sans", system-ui, sans-serif',
+          fontFamily: 'var(--font-primary)',
           fontWeight: 500,
-          fontSize: '11px',
+          fontSize: '0.6875rem',
           textTransform: 'none',
-          borderRadius: '5px',
+          borderRadius: '0.3125rem',
           letterSpacing: '0',
-          padding: '4px 10px',
+          padding: '0.25rem 0.625rem',
         },
       },
     },
     MuiChip: {
       styleOverrides: {
         root: {
-          fontFamily: '"DM Sans", system-ui, sans-serif',
-          fontSize: '10px',
+          fontFamily: 'var(--font-primary)',
+          fontSize: '0.75rem',
           fontWeight: 500,
-          height: '20px',
-          borderRadius: '20px',
+          height: '1.25rem',
+          borderRadius: '1.25rem',
         },
-        label: { paddingLeft: '7px', paddingRight: '7px' },
+        label: { paddingLeft: '0.4375rem', paddingRight: '0.4375rem' },
       },
     },
     MuiTooltip: {
       styleOverrides: {
         tooltip: {
-          fontFamily: '"DM Sans", system-ui, sans-serif',
-          fontSize: '11px',
+          fontFamily: 'var(--font-primary)',
+          fontSize: '0.75rem',
           background: '#18181A',
-          borderRadius: '5px',
-          padding: '5px 9px',
+          borderRadius: '0.3125rem',
+          padding: '0.3125rem 0.5625rem',
         },
       },
     },
     MuiInputBase: {
       styleOverrides: {
         root: {
-          fontFamily: '"DM Sans", system-ui, sans-serif',
-          fontSize: '12px',
+          fontFamily: 'var(--font-primary)',
+          fontSize: '0.75rem',
         },
       },
     },
@@ -142,11 +142,12 @@ export const crmTheme = createTheme({
     MuiBadge: {
       styleOverrides: {
         badge: {
-          fontFamily: '"DM Sans", system-ui, sans-serif',
-          fontSize: '10px',
+          fontFamily: 'var(--font-primary)',
+          fontSize: '0.75rem',
           fontWeight: 700,
         },
       },
     },
   },
 });
+

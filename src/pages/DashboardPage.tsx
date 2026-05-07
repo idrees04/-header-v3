@@ -4,10 +4,10 @@ import { KPIStrip } from '../components/KPIStrip';
 import { AnalyticsRow } from '../components/AnalyticsRow';
 import { CrmDataGrid } from '../components/grid/CrmDataGrid';
 import { AppLayout } from '@/components/AppLayout';
-import {  useMediaQuery, useTheme } from '@mui/material';
+import { useMediaQuery, useTheme } from '@mui/material';
 
 export default function DashboardPage() {
-    const theme = useTheme();
+  const theme = useTheme();
   const isCompact = useMediaQuery(theme.breakpoints.down('xl'));
   return (
     <AppLayout>
@@ -16,14 +16,14 @@ export default function DashboardPage() {
         Dashboard
       </Typography>
     </Box> */}
-      <div className="flex flex-col h-screen overflow-hidden bg-[#F9F8F6] gap-2 pb-2">
+      <div className="flex flex-col min-h-0 flex-1 bg-[#F9F8F6] gap-4">
         {/* <DashHeader />
         <KPIStrip />
         <AnalyticsRow /> */}
-        <div className="flex-1 min-h-0 px-3 flex flex-col">
+        <div className="flex-1 min-h-0 flex flex-col">
           <CrmDataGrid />
         </div>
-        <motion.footer
+        {/* <motion.footer
           className="px-3 flex items-center justify-between flex-shrink-0"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -35,7 +35,7 @@ export default function DashboardPage() {
           <span className="text-[9.5px] text-[#C4C2BB] font-mono">
             Composite Pattern · Zustand · Tailwind v4 · shadcn/ui primitives
           </span>
-        </motion.footer>
+        </motion.footer> */}
       </div>
     </AppLayout>
   );

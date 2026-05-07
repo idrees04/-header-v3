@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { useDashboardStore } from '../store/dashboardStore';
+import { useDashboardStore } from '../stores/dashboardStore';
 
 const LiveDot: React.FC = () => (
   <span className="relative inline-flex h-2 w-2">
@@ -10,7 +10,7 @@ const LiveDot: React.FC = () => (
 );
 
 export const DashHeader: React.FC = () => {
-  const total   = useDashboardStore(s => s.totalStudentsFromAPI);
+  const total = useDashboardStore(s => s.totalStudentsFromAPI);
   const programs = useDashboardStore(s => s.totalProgramsFromAPI);
 
   const now = new Date().toLocaleDateString('en-GB', {

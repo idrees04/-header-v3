@@ -1,14 +1,14 @@
 import React, { useCallback, useRef } from 'react';
 import {
-  GridToolbarColumnsButton,
-  GridToolbarExport,
   useGridApiContext,
+  ColumnsPanelTrigger,
 } from '@mui/x-data-grid-pro';
 import { motion } from 'framer-motion';
-import { useDashboardStore } from '../../store/dashboardStore';
+import { useDashboardStore } from '../../stores/dashboardStore';
 import type { FilterMode } from '../../types';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
+import { useScaling } from '@/hooks/useScaling';
 
 const FILTERS: { mode: FilterMode; label: string }[] = [
   { mode: 'all', label: 'All' },
@@ -21,26 +21,18 @@ const FILTERS: { mode: FilterMode; label: string }[] = [
   { mode: 'no_program', label: 'No Program' },
 ];
 
-const SearchIcon = () => (
-  <svg width="12" height="12" viewBox="0 0 13 13" fill="none">
-    <circle cx="5.5" cy="5.5" r="4.5" stroke="currentColor" strokeWidth="1.3" />
-    <path d="M9 9l3 3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
-  </svg>
-);
-
-const ExpandAllIcon = () => (
-  <svg width="11" height="11" viewBox="0 0 12 12" fill="none">
-    <path d="M1 4V1h3M8 1h3v3M1 8v3h3M8 9h3v3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-  </svg>
-);
-
-const CollapseAllIcon = () => (
-  <svg width="11" height="11" viewBox="0 0 12 12" fill="none">
-    <path d="M4 1v3H1M11 4V1H8M4 11v-3H1M11 8v3H8" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-  </svg>
-);
+const SearchIcon = () => {
+  const { sc } = useScaling();
+  return (
+    <svg width={sc(12)} height={sc(12)} viewBox="0 0 13 13" fill="none">
+      <circle cx="5.5" cy="5.5" r="4.5" stroke="currentColor" strokeWidth="1.3" />
+      <path d="M9 9l3 3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+    </svg>
+  );
+};
 
 export const GridToolbarComposite: React.FC = () => {
+  const { sc, font, rem } = useScaling();
   const apiRef = useGridApiContext();
 
   const searchQuery = useDashboardStore(s => s.searchQuery);
@@ -75,98 +67,138 @@ export const GridToolbarComposite: React.FC = () => {
     0
   );
 
+  const buttonStyle = {
+    fontSize: font(0.875),
+    paddingLeft: rem(0.875),
+    paddingRight: rem(0.875),
+    paddingTop: rem(0.375),
+    paddingBottom: rem(0.375),
+    borderRadius: rem(9999),
+    height: 'auto',
+  };
+
   return (
     <div className="flex flex-col border-b border-[rgba(0,0,0,0.08)] bg-[#FAFAF9]">
       {/* Row 1 */}
-      <div className="flex items-center gap-2 px-3 py-2 flex-wrap">
-
+      <div
+        className="flex items-center px-4 flex-wrap"
+        style={{ gap: rem(1), paddingTop: rem(0.5), paddingBottom: rem(0.5), minHeight: sc(44) }}
+      >
         {/* Search */}
-        <div className="w-72 flex-shrink-0 text-black">
+        <div className="w-full text-black" style={{ maxWidth: sc(320) }}>
           <Input
             ref={inputRef}
             type="text"
-            placeholder="Search students, CRM#, office, program…"
+            placeholder="Search students..."
             value={searchQuery}
             onChange={handleSearch}
             onClear={handleClear}
             leftIcon={<SearchIcon />}
+            style={{ height: sc(34), fontSize: font(0.875) }}
+            className="placeholder:text-black/50"
           />
         </div>
 
         {/* Divider */}
-        <div className="h-5 w-px bg-[rgba(0,0,0,0.09)]" />
+        <div className="w-px bg-[rgba(0,0,0,0.09)]" style={{ height: sc(20) }} />
 
-        {/* MUI Toolbar */}
-        <div className="flex items-center gap-0.5">
-          <GridToolbarColumnsButton
-            slotProps={{
-              button: {
-                size: 'small',
-                sx: {
-                  fontFamily: 'var(--font-body)',
-                  fontSize: '10.5px',
-                  textTransform: 'none',
-                  color: '#000000',
-                  padding: '3px 8px',
-                  borderRadius: '5px',
-                  '&:hover': { background: '#F2F1EE' },
-                },
-              },
-            }}
+        {/* Toolbar Buttons */}
+        <div className="flex items-center" style={{ gap: rem(0.5) }}>
+          <ColumnsPanelTrigger
+            render={(buttonProps) => (
+              <Button
+                {...buttonProps}
+                variant="outline"
+                size="sm"
+                className="flex items-center gap-1.5 font-medium text-black bg-white shadow-sm hover:bg-[#F2F1EE] transition-all border-[rgba(0,0,0,0.12)]"
+                style={buttonStyle}
+              >
+                Columns
+              </Button>
+            )}
           />
 
-          <GridToolbarExport
-            slotProps={{
-              button: {
-                size: 'small',
-                sx: {
-                  fontFamily: 'var(--font-body)',
-                  fontSize: '10.5px',
-                  textTransform: 'none',
-                  color: '#000000',
-                  padding: '3px 8px',
-                  borderRadius: '5px',
-                  '&:hover': { background: '#F2F1EE' },
-                },
-              },
-            }}
-          />
-        </div>
-
-        {/* Divider */}
-        <div className="h-5 w-px bg-[rgba(0,0,0,0.09)]" />
-
-        {/* Expand / Collapse */}
-        <motion.div whileTap={{ scale: 0.94 }}>
-          <Button
-            className="rounded-full flex items-center gap-1.5 text-black"
-            variant="ghost"
+          {/* Export Button */}
+          {/* <Button
+            className={buttonClass}
+            variant="outline"
             size="sm"
-            onClick={toggleExpandAll}
-            title={isAllExpanded ? 'Collapse all students' : 'Expand all students'}
+            onClick={handleExportClick}
           >
-            {isAllExpanded ? <CollapseAllIcon /> : <ExpandAllIcon />}
-            {isAllExpanded ? 'Collapse All' : 'Expand All'}
-          </Button>
-        </motion.div>
+            <DownloadIcon style={{ fontSize: 18, marginRight: 6 }} />
+            Export
+          </Button> */}
+
+          {/* Export Menu // Enable with Premium*/}
+          {/* <Menu
+            anchorEl={exportAnchorEl}
+            open={Boolean(exportAnchorEl)}
+            onClose={handleExportClose}
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+          >
+            <MenuItem
+              onClick={() => {
+                apiRef.current.exportDataAsCsv();
+                handleExportClose();
+              }}
+            >
+              Download as CSV
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                apiRef.current.exportDataAsExcel(); 
+                alert('Excel export available in Premium version');
+                handleExportClose();
+              }}
+            >
+              Download as Excel
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                window.print();
+                handleExportClose();
+              }}
+            >
+              Print
+            </MenuItem>
+          </Menu> */}
+          <motion.div whileTap={{ scale: 0.94 }}>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={toggleExpandAll}
+              className="flex items-center gap-1.5 font-medium text-black bg-white shadow-sm hover:bg-[#F2F1EE] transition-all border-[rgba(0,0,0,0.12)]"
+              style={buttonStyle}
+              title={isAllExpanded ? 'Collapse all students' : 'Expand all students'}
+            >
+              {isAllExpanded ? 'Collapse All' : 'Expand All'}
+            </Button>
+          </motion.div>
+        </div>
+
+        {/* Divider */}
+        <div className="w-px bg-[rgba(0,0,0,0.09)]" style={{ height: sc(20) }} />
 
         {/* Stats */}
-        <div className="ml-auto text-[10px] text-black font-mono tabular-nums whitespace-nowrap">
-          <span className="font-semibold text-black">
-            {totalRows.toLocaleString()}
-          </span>{' '}
-          students
+        <div
+          className="ml-auto text-black tabular-nums whitespace-nowrap"
+          style={{ fontSize: font(0.875) }}
+        >
+          <span className="font-bold">{totalRows.toLocaleString()}</span> Students
           &nbsp;·&nbsp;
-          <span className="font-semibold text-black">
-            {totalOpps.toLocaleString()}
-          </span>{' '}
-          opps
+          <span className="font-bold">{totalOpps.toLocaleString()}</span> Programs
         </div>
       </div>
 
-      {/* Row 2 */}
-      <div className="flex items-center gap-1 px-3 pb-2 flex-wrap">
-        <span className="text-[9px] font-bold uppercase tracking-[0.6px] text-black mr-1">
+      {/* Row 2 - Filters */}
+      <div
+        className="flex items-center px-4"
+        style={{ gap: rem(0.625), paddingBottom: rem(0.625), flexWrap: 'wrap' }}
+      >
+        <span
+          className="font-bold uppercase tracking-[0.8px] text-black opacity-80"
+          style={{ fontSize: font(0.75), marginRight: rem(0.5) }}
+        >
           Filter:
         </span>
 
@@ -175,13 +207,13 @@ export const GridToolbarComposite: React.FC = () => {
             key={f.mode}
             onClick={() => setFilterMode(f.mode)}
             className={[
-              'inline-flex items-center rounded-full px-2.5 py-0.5 text-[10px] font-medium border transition-all duration-150 cursor-pointer',
+              'inline-flex items-center rounded-full border transition-all duration-150 cursor-pointer shadow-sm font-medium',
               filterMode === f.mode
                 ? 'bg-[#18181A] text-white border-[#18181A]'
-                : 'bg-white text-black border-[rgba(0,0,0,0.10)] hover:border-[rgba(0,0,0,0.18)] hover:bg-[#F2F1EE]',
+                : 'bg-white text-black border-[rgba(0,0,0,0.12)] hover:border-[rgba(0,0,0,0.22)] hover:bg-[#F2F1EE]',
             ].join(' ')}
+            style={{ fontSize: font(0.875), paddingLeft: rem(0.75), paddingRight: rem(0.75), paddingTop: rem(0.25), paddingBottom: rem(0.25) }}
             whileTap={{ scale: 0.95 }}
-            transition={{ duration: 0.1 }}
           >
             {f.label}
           </motion.button>
